@@ -1,0 +1,292 @@
+# BattleEntity.gd 战斗实体基本类型
+class_name BattleEntity
+extends Node2D
+
+var target:BattleEntity = null
+
+# 基因信息文字说明
+var description:String = "default_battle_entity_info"
+
+# 最大生命值
+var health_max:float = 100 setget set_health_max, get_health_max
+
+func get_health_max()->float:
+	var out:float = health_max
+	for i in $gene_pivot.get_children():
+		out += i.health_max
+	return out
+
+func set_health_max(f:float)->void:
+	health_max = f
+	if(self.health_max < health_current):
+		health_current = self.health_max
+
+# 当前生命值
+var health_current:float = 100 setget set_health_current
+
+func set_health_current(f):
+	if(f<self.health_max):
+		health_current = f
+	else:
+		health_current = self.health_max
+
+# 生命恢复
+var health_recovery:float = 1 setget set_health_recovery, get_health_recovery
+
+func get_health_recovery()->float:
+	var out:float = health_recovery
+	for i in $gene_pivot.get_children():
+		out += i.health_recovery
+	return out
+
+func set_health_recovery(f:float)->void:
+	health_recovery = f
+
+# 攻击速度
+var attack_speed:float = 1 setget set_attack_speed, get_attack_speed
+
+func get_attack_speed()->float:
+	var out:float = attack_speed
+	for i in $gene_pivot.get_children():
+		out += i.attack_speed
+	return out
+
+func set_attack_speed(f:float)->void:
+	attack_speed = f
+
+# 攻击冷却
+var attack_cd:float = 0
+
+# 攻击力
+var attack:float = 5 setget set_attack, get_attack
+
+func get_attack()->float:
+	var out:float = attack
+	for i in $gene_pivot.get_children():
+		out += i.attack
+	return out
+
+func set_attack(f:float)->void:
+	attack = f
+
+# 穿甲率
+var piercing_rate:float = 0 setget set_piercing_rate, get_piercing_rate
+
+func get_piercing_rate()->float:
+	var out:float = piercing_rate
+	for i in $gene_pivot.get_children():
+		out += i.piercing_rate
+	return out
+
+func set_piercing_rate(f:float)->void:
+	piercing_rate = f
+
+# 护甲
+var armor:float = 2 setget set_armor, get_armor
+
+func get_armor()->float:
+	var out:float = armor
+	for i in $gene_pivot.get_children():
+		out += i.armor
+	return out
+
+func set_armor(f:float)->void:
+	armor = f
+# 护甲率
+var armor_rate:float = 0.2 setget set_armor_rate, get_armor_rate
+
+func get_armor_rate()->float:
+	var out:float = armor_rate
+	for i in $gene_pivot.get_children():
+		out += i.armor_rate
+	return out
+
+func set_armor_rate(f:float)->void:
+	armor_rate = f
+	
+#暴击率Z
+var crit_rate:float = 0.3 setget set_crit_rate,get_crit_rate
+
+func get_crit_rate()->float:
+	var out:float = crit_rate
+	for i in $gene_pivot.get_children():
+		out+=i.crit_rate
+	return out
+	
+func set_crit_rate(f:float)->void:
+	crit_rate = f
+	
+#暴击倍数Z
+var crit_multiple:float = 2 setget set_crit_multiple,get_crit_multiple
+
+func get_crit_multiple()->float:
+	var out:float = crit_multiple
+	for i in $gene_pivot.get_children():
+		out+=i.crit_multiple
+	return out
+	
+func set_crit_multiple(f:float)->void:
+	crit_multiple=f
+
+
+#最大能量Z
+var energy_max:float = 100 setget set_energy_max,get_energy_max
+
+func get_energy_max()->float:
+	var out:float = energy_max
+	for i in $gene_pivot.get_children():
+		out+=i.energy_max
+	return out
+	
+func set_energy_max(f:float)->void:
+	energy_max = f
+	if(self.energy_max < energy_current):
+		energy_current = self.energy_max
+	
+#当前能量值Z
+var energy_current:float = 100 setget set_energy_current
+
+func set_energy_current(f):
+	if(f<self.energy_max):
+		energy_current = f
+	else:
+		energy_current = self.energy_max
+		
+#能量恢复Z
+var energy_recover:float = 10 setget set_energy_recover,get_energy_recover
+
+func get_energy_recover()->float:
+	var out:float = energy_recover
+	for i in $gene_pivot.get_children():
+		out+=i.energy_recover
+	return out
+	
+func set_energy_recover(f:float)->void:
+	energy_recover=f
+
+#反伤率Z
+var rebound_rate:float = 0.2 setget set_rebound_rate,get_rebound_rate
+
+func get_rebound_rate()->float:
+	var out:float = rebound_rate
+	for i in $gene_pivot.get_children():
+		out+=i.rebound_rate
+	return out
+
+func set_rebound_rate(f:float)->void:
+	rebound_rate = f
+
+#反伤比例Z
+var rebound_proportion:float = 0.4 setget set_rebound_proportion,get_rebound_proportion
+
+func get_rebound_proportion()->float:
+	var out:float = rebound_proportion
+	for i in $gene_pivot.get_children():
+		out+=i.rebound_proportion
+	return out
+	
+func set_rebound_proportion(f:float)->void:
+	rebound_proportion = f
+
+
+# 燃烧时间
+var burning_cd:float = 0
+
+func _physics_process(delta:float):
+		
+	# 攻击冷却
+	if(attack_cd > 0):
+		attack_cd -= self.attack_speed * delta
+	
+	# 攻击敌人
+	if(attack_cd <= 0 and target != null and is_instance_valid(target)):
+		
+		offence(target)
+		attack_cd += 1
+	
+	# 燃烧效果
+	if(burning_cd > 0):
+		health_current -= G.BURNING_RATE * self.health_max * delta
+		burning_cd -= delta
+		on_burning(delta)
+	
+	# 检测死亡&恢复生命值
+	if(health_current <= 0):
+		on_dead()
+		print("%s生命值归零死亡了" % description)
+		queue_free()
+	else:
+		self.health_current += self.health_recovery * delta
+		#能量恢复Z
+		self.energy_current += self.energy_recover * delta
+		#print(self.description,"生命恢复了",self.health_recovery*delta,"点生命")
+
+# 发动进攻
+func offence(be:BattleEntity):
+	
+	print("%s 发起攻击 %s" % [self.description, be.description])
+	
+	# 实际的护甲率
+	var real_armor_rate:float
+	# 是否护甲格挡成功
+	var is_blocked:int
+	
+	if(be.armor<=0 or be.armor_rate<=0):
+		real_armor_rate = 0
+		is_blocked = 0
+	else:
+		real_armor_rate = max(be.armor_rate - self.piercing_rate, 0)
+		if(randf() - real_armor_rate < 0):
+			is_blocked = 1
+		else:
+			is_blocked = 0
+	
+	#是否暴击成功(初始默认暴击倍数为1)Z
+	var crit=1
+	if(randf()<=self.crit_rate):
+		crit=self.crit_multiple
+		print("%s 对 %s 造成暴击" % [self.description, be.description])
+		
+	# 造成的真实伤害
+	var damage:float = max(self.attack*crit - is_blocked * be.armor, 0)
+	be.health_current -= damage
+	# 触发
+	on_attack(be)
+	be.on_hit_by(self)
+	
+#	print("%s的实际护甲率是%s"%[be.description,real_armor_rate])
+	
+	if(is_blocked == 0):
+		print("%s的护甲被穿透了，受到%s伤害，剩下生命值%s"%[be.description,damage,be.health_current])
+	else:
+		print("%s的护甲挡住了%s伤害，受到%s伤害，剩下生命值%s"%[be.description,be.armor,damage,be.health_current])
+		
+		
+	#是否触发反伤Z
+	var rebound_damage=0
+	if(randf()<=be.rebound_rate):
+		rebound_damage=damage*be.rebound_proportion
+		self.health_current-=rebound_damage
+		print("%s的攻击触发了%s的反伤，造成了%s伤害，%s剩余%s生命"%[self.description,be.description,rebound_damage,self.description,self.health_current])
+	
+	print("---------------------------------------------------------------------------")
+
+# 当正在燃烧时，每帧触发 delta是间隔时间
+func on_burning(delta:float):
+	for g in $gene_pivot.get_children():
+		g.on_burning(delta)
+
+# 当死亡时，单帧触发
+func on_dead():
+	for g in $gene_pivot.get_children():
+		g.on_dead()
+	
+# 当击中敌人时 enemy是击中的敌人
+func on_attack(enemy:BattleEntity):
+	for g in $gene_pivot.get_children():
+		g.on_attack(enemy)
+
+# 被敌人击中时 enemy是击中自己的敌人
+func on_hit_by(enemy:BattleEntity):
+	for g in $gene_pivot.get_children():
+		g.on_hit_by(enemy)
