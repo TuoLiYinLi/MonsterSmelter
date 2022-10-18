@@ -33,8 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="MonsterSmelter"
-run/main_scene="res://Scene/test_1.tscn"
-config/icon="res://Texture/icon.png"
+run/main_scene="res://Scene/test_2.tscn"
 
 [autoload]
 

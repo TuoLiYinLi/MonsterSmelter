@@ -64,3 +64,9 @@ func on_attack(enemy):
 
 func on_hit_by(enemy):
 	pass
+
+
+# --------------------------------------------------------------------
+# 角色移动系统
+
+var moving_speed:float = 0
