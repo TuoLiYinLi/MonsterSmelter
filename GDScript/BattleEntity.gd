@@ -2,6 +2,10 @@
 class_name BattleEntity
 extends Node2D
 
+
+func _ready():
+	$TextEdit.text=self.description
+
 # 已经锁定的攻击目标
 var target:BattleEntity = null
 
@@ -335,20 +339,21 @@ var moving_cd:float = 0
 
 func move(direction):
 	if(is_moving or moving_cd>0):
-		print("%s的移动能力还在冷却")
+		print("%s的移动能力还在冷却"%[self.description])
 		return
-	else:
+	#设置条件使得运动不出界Z
+	elif(position.x>64&&position.x<608&&position.y>64&&position.y<608):	
 		moving_cd += 1
-		print("%s开始移动")
-	match(direction):
-		G.DIRECTION.LEFT:
-			next_position = position+Vector2(-16,0)
-		
-		G.DIRECTION.RIGHT:
-			next_position = position+Vector2(16,0)
-			
-		G.DIRECTION.UP:
-			next_position = position+Vector2(0,-16)
-		
-		G.DIRECTION.DOWN:
-			next_position = position+Vector2(0,16)
+		print("%s开始移动"%[self.description])
+		match(direction):
+			G.DIRECTION.LEFT:					
+				next_position = position+Vector2(-64,0)	
+			G.DIRECTION.RIGHT:
+				next_position = position+Vector2(64,0)
+					
+			G.DIRECTION.UP:
+				next_position = position+Vector2(0,-64)
+				
+			G.DIRECTION.DOWN:
+				next_position = position+Vector2(0,64)
+	print("%s当前位置为%s"%[self.description,position])

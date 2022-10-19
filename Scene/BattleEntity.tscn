@@ -4,6 +4,7 @@
 [ext_resource path="res://Texture/BattleEntity/SlimeMove.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 32, 32 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
@@ -41,7 +42,17 @@ collision_mask = 0
 shape = SubResource( 6 )
 
 [node name="sprite" type="Node2D" parent="."]
+position = Vector2( 32, 32 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="sprite"]
+position = Vector2( -32, -32 )
+scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
+frame = 2
 playing = true
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_left = -16.0
+margin_top = 24.0
+margin_right = 32.0
+margin_bottom = 48.0

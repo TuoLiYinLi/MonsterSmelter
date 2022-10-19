@@ -39,6 +39,11 @@ run/main_scene="res://Scene/test_2.tscn"
 
 G="*res://GDScript/G.gd"
 
+[display]
+
+window/size/width=640
+window/size/height=640
+
 [physics]
 
 common/enable_pause_aware_picking=true
