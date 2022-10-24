@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "GeneIgnite",
 "language": "GDScript",
 "path": "res://GDScript/gene_ignite.gd"
+}, {
+"base": "Node2D",
+"class": "Map",
+"language": "GDScript",
+"path": "res://GDScript/test_2.gd"
 } ]
 _global_script_class_icons={
 "BattleEntity": "",
 "Gene": "",
-"GeneIgnite": ""
+"GeneIgnite": "",
+"Map": ""
 }
 
 [application]

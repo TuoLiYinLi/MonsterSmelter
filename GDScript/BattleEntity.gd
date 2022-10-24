@@ -318,6 +318,9 @@ var next_position:Vector2 = Vector2.ZERO
 
 var last_position:Vector2 = Vector2.ZERO
 
+#目标位置
+var target_position:Vector2 = Vector2.ZERO
+
 var is_moving:bool = false
 
 # 角色移动速度
@@ -337,23 +340,89 @@ var moving_cd:float = 0
 
 
 
-func move(direction):
+#动态规划寻路算法（BFS宽度优先搜索）
+var pre_route = [] # 宽度搜索得到的节点
+var q = []  # 队列结构控制循环次数
+var xx = [0, 1, 0, -1] # 右移、下移、左移、上移
+var yy = [1, 0, -1, 0]
+var visited = []  # 记录节点是否已遍历
+var father = []  # 每一个pre_route节点的父节点
+var route = []
+
+func bfs(map, start_position, dinal_position):
+	var x:int = start_position.y/64
+	var y:int = start_position.x/64
+	var m:int = dinal_position.y/64
+	var n:int = dinal_position.x/64
+	print(x,y,m,n)
+	for i in range(len(map[0])):
+		visited.push_back([])
+		for j in range(len(map)):
+			visited[i].push_back(0)
+	visited[x][y] = 1 # 入口节点设置为已遍历
+	q.push_back([x,y])
+	while !q.empty(): # 队列为空则结束循环
+		var now = q[0] 
+		q.pop_at(0) # 移除队列头结点
+		for i in range(4):
+			var point = [now[0] + xx[i], now[1] + yy[i]]#当前节点
+			if point[0]<0 or point[1]<0 or point[0]>=len(map) or point[1] >= len(map[0]) or visited[point[0]][point[1]]==1 or map[point[0]][point[1]]==1:
+				continue
+			father.push_back(now)
+			visited[point[0]][point[1]] = 1
+			q.push_back((point))
+			pre_route.push_back(point)
+			if point[0] == m and point[1] == n:
+				print("success")
+				return 1
+	print("false")
+	return 0
+
+
+func get_route(father, pre_route): #寻找并输出最短路径Z
+	route = [pre_route[-1], father[-1]]
+	for i in range(len(pre_route) -1, -1, -1):
+		if pre_route[i] == route[-1]:
+			route.push_back(father[i])			
+	route.invert()
+	print("最短路径为：",route)
+	print("步长",len(route)-1)
+	return route
+				
+
+func clear(a:Array, b:Array, c:Array, d:Array, e:Array):#数组清空方便下次运算Z
+	a.clear()
+	b.clear()
+	c.clear()
+	d.clear()
+	e.clear()
+
+
+
+func move(maze):
+	var map = maze.duplicate(true)
 	if(is_moving or moving_cd>0):
 		print("%s的移动能力还在冷却"%[self.description])
 		return
-	#设置条件使得运动不出界Z
-	elif(position.x>64&&position.x<608&&position.y>64&&position.y<608):	
+	else:	
+		print(position)
+		#进入寻路算法有路输出true Z
+		if bfs(map, position, target_position):
+			route = get_route(father, pre_route)
+			next_position.x = route[1][1]*64 + 32
+			next_position.y = route[1][0]*64 + 32
+			print(route)
+			clear(route, visited, father, pre_route, q)#清空所有数组内的数据Z
 		moving_cd += 1
-		print("%s开始移动"%[self.description])
-		match(direction):
-			G.DIRECTION.LEFT:					
-				next_position = position+Vector2(-64,0)	
-			G.DIRECTION.RIGHT:
-				next_position = position+Vector2(64,0)
+		
+		#match(direction):ne
+		#	G.DIRECTION.LEFT:					
+		#		next_position = position+Vector2(-64,0)	
+		#	G.DIRECTION.RIGHT:
+		#		next_position = position+Vector2(64,0)
 					
-			G.DIRECTION.UP:
-				next_position = position+Vector2(0,-64)
+		#	G.DIRECTION.UP:
+		#		next_position = position+Vector2(0,-64)
 				
-			G.DIRECTION.DOWN:
-				next_position = position+Vector2(0,64)
-	print("%s当前位置为%s"%[self.description,position])
+		#	G.DIRECTION.DOWN:
+		#		next_position = position+Vector2(0,64)
