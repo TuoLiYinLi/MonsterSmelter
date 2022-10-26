@@ -340,7 +340,8 @@ var moving_cd:float = 0
 
 
 
-#动态规划寻路算法（BFS宽度优先搜索）
+#动态规划寻路算法（BFS宽度优先搜索）Z
+#--------------------------------------------------------
 var pre_route = [] # 宽度搜索得到的节点
 var q = []  # 队列结构控制循环次数
 var xx = [0, 1, 0, -1] # 右移、下移、左移、上移
@@ -366,7 +367,7 @@ func bfs(map, start_position, dinal_position):
 		q.pop_at(0) # 移除队列头结点
 		for i in range(4):
 			var point = [now[0] + xx[i], now[1] + yy[i]]#当前节点
-			if point[0]<0 or point[1]<0 or point[0]>=len(map) or point[1] >= len(map[0]) or visited[point[0]][point[1]]==1 or map[point[0]][point[1]]==1:
+			if point[0]<0 or point[1]<0 or point[0]>=len(map) or point[1] >= len(map[0]) or visited[point[0]][point[1]]==1 or map[point[0]][point[1]]!=0 :
 				continue
 			father.push_back(now)
 			visited[point[0]][point[1]] = 1
@@ -397,22 +398,34 @@ func clear(a:Array, b:Array, c:Array, d:Array, e:Array):#数组清空方便下�
 	d.clear()
 	e.clear()
 
+#---------------------------------------------------------------------------
 
-
-func move(maze):
-	var map = maze.duplicate(true)
+func move(grid_map):
+	
 	if(is_moving or moving_cd>0):
 		print("%s的移动能力还在冷却"%[self.description])
 		return
-	else:	
-		print(position)
+	else:
+		#动态生成地图	，可能是函数传参的限制，只能在这里生成地图Z
+		var map:Array
+		for i in range(len(grid_map[0])):
+			map.append([])
+			for j in len(grid_map):
+				map[i].append(int(grid_map[i][j].grid_building))
+				if(int(grid_map[i][j].grid_role)!=0):
+					map[i][j]+=2
+			
+		
 		#进入寻路算法有路输出true Z
 		if bfs(map, position, target_position):
+			#获取最短路径 Z
 			route = get_route(father, pre_route)
+			#下面两行修改grid_map中的角色 Z
+			grid_map[int(position.y/64)][int(position.x/64)].change_role(0)	
 			next_position.x = route[1][1]*64 + 32
-			next_position.y = route[1][0]*64 + 32
-			print(route)
-			clear(route, visited, father, pre_route, q)#清空所有数组内的数据Z
+			next_position.y = route[1][0]*64 + 32				
+			grid_map[int(next_position.y/64)][int(next_position.x/64)].change_role(self.description)	
+		clear(route, visited, father, pre_route, q)#清空所有数组内的数据，优化内存Z
 		moving_cd += 1
 		
 		#match(direction):ne
