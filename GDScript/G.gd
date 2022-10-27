@@ -20,6 +20,14 @@ enum DIRECTION{
 var battle_entity:PackedScene = load("res://Scene/BattleEntity.tscn")
 # 预加载的基因场景
 var gene:PackedScene = load("res://Scene/Gene.tscn")
+
+# 预加载网格
+var grid:PackedScene = load("res://Scene/Grid.tscn")
+# 预加载的网格管理器
+var grid_manager:PackedScene = load("res://Scene/GridManager.tscn")
+
+var building:PackedScene = load("res://Scene/Building.tscn")
+
 # 点燃基因
 var gene_ignite:PackedScene = load("res://Scene/gene_ignite.tscn")
 # 能量消耗Z
@@ -34,3 +42,12 @@ func detect_battle_entity_range(from:Vector2, to:Vector2) -> Array:
 func detect_battle_entity_at(posi:Vector2):
 	
 	return 
+
+# ----------------------------------------------------------------------
+# 导出寻路网格
+func simple_navigate_matrix(_grid)->float:
+	if(_grid.battle_entity != null):
+		return 2.0
+	if(_grid.building != null):
+		return 1.0
+	return 0.0

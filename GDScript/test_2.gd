@@ -45,8 +45,7 @@ var maze_floor = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 
 #创建格子类数组Z				
 var grid_map:Array = []
-
-class Grid:
+class Grid_Z:
 	var grid_position:Vector2
 	var grid_role
 	var grid_building
@@ -86,7 +85,7 @@ func creat_grid():
 		var inner_list:Array = []
 		grid_map.append(inner_list)
 		for y in range(10):
-			inner_list.append(Grid.new(Vector2(x*64+32,y*64+32),maze_role[x][y],maze[x][y],maze_floor[x][y]))
+			inner_list.append(Grid_Z.new(Vector2(x*64+32,y*64+32),maze_role[x][y],maze[x][y],maze_floor[x][y]))
 
 	
 func _ready():
@@ -128,6 +127,6 @@ func _ready():
 	while(true):
 		yield(get_tree().create_timer(0.5),"timeout")
 		
-		m1.move(grid_map)
-		m2.move(grid_map)
-		m3.move(grid_map)
+		m1.move_Z(grid_map)
+		m2.move_Z(grid_map)
+		m3.move_Z(grid_map)

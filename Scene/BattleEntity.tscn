@@ -42,13 +42,10 @@ collision_mask = 0
 shape = SubResource( 6 )
 
 [node name="sprite" type="Node2D" parent="."]
-position = Vector2( 32, 32 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="sprite"]
-position = Vector2( -32, -32 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
-frame = 2
 playing = true
 
 [node name="TextEdit" type="TextEdit" parent="."]

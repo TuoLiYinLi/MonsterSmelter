@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://GDScript/BattleEntity.gd"
 }, {
 "base": "Node2D",
+"class": "Building",
+"language": "GDScript",
+"path": "res://Scene/Building.gd"
+}, {
+"base": "Node2D",
 "class": "Gene",
 "language": "GDScript",
 "path": "res://GDScript/Gene.gd"
@@ -25,21 +30,34 @@ _global_script_classes=[ {
 "path": "res://GDScript/gene_ignite.gd"
 }, {
 "base": "Node2D",
+"class": "Grid",
+"language": "GDScript",
+"path": "res://GDScript/Grid.gd"
+}, {
+"base": "Node2D",
+"class": "GridManager",
+"language": "GDScript",
+"path": "res://GDScript/GridManager.gd"
+}, {
+"base": "Node2D",
 "class": "Map",
 "language": "GDScript",
 "path": "res://GDScript/test_2.gd"
 } ]
 _global_script_class_icons={
 "BattleEntity": "",
+"Building": "",
 "Gene": "",
 "GeneIgnite": "",
+"Grid": "",
+"GridManager": "",
 "Map": ""
 }
 
 [application]
 
 config/name="MonsterSmelter"
-run/main_scene="res://Scene/test_2.tscn"
+run/main_scene="res://Scene/test_3.tscn"
 
 [autoload]
 

@@ -233,6 +233,10 @@ func _physics_process(delta:float):
 			last_position = next_position
 		else:
 			position += delta_posi
+		
+		if(target_grid != grid and (position - next_position).length_squared()<(position - last_position).length_squared()):
+			on_leave_grid()
+			on_enter_grid(target_grid)
 	else:
 		is_moving = false
 	
@@ -313,11 +317,15 @@ func on_hit_by(enemy:BattleEntity):
 # ---------------------------------------------------------------------------
 # 运动系统
 
+# 自己所在位置处的网格
+var grid = null
+# 目标的网格
+var target_grid = null
+
 # 朝向移动的位置（一定在网格上）
 var next_position:Vector2 = Vector2.ZERO 
 
 var last_position:Vector2 = Vector2.ZERO
-
 #目标位置
 var target_position:Vector2 = Vector2.ZERO
 
@@ -338,7 +346,43 @@ func set_moving_speed(f:float)->void:
 # 移动的冷却
 var moving_cd:float = 0
 
+# 开始向目标网格移动
+func move_to(_target_grid):
+	if(is_moving or moving_cd>0):
+		print("%s的移动能力还在冷却" % [self.description])
+		return
+	else:
+		moving_cd += 1
+		target_grid = _target_grid
+		next_position = _target_grid.position
 
+# 直接将当前战斗实体传送到目标位置
+func teleport_to(_target_grid):
+	if(grid):
+		on_leave_grid()
+	on_enter_grid(_target_grid)
+	print("传送到网格 位置%s"%_target_grid.position)
+	position = _target_grid.position
+	last_position = position
+	next_position = position
+	
+# 当离开一个网格时触发
+func on_leave_grid():
+	if(grid):
+		print("离开网格 %s" % grid.position)
+		grid.battle_entity = null
+		grid = null
+	else:
+		printerr("离开网格时，网格不存在")
+
+# 当进入一个网格时触发
+func on_enter_grid(_grid):
+	if(_grid):
+		_grid.battle_entity = self
+		grid = _grid
+		print("进入新的网格 %s" % grid.position)
+	else:
+		printerr("进入网格时，网格不存在")
 
 #动态规划寻路算法（BFS宽度优先搜索）Z
 #--------------------------------------------------------
@@ -400,7 +444,7 @@ func clear(a:Array, b:Array, c:Array, d:Array, e:Array):#数组清空方便下�
 
 #---------------------------------------------------------------------------
 
-func move(grid_map):
+func move_Z(grid_map):
 	
 	if(is_moving or moving_cd>0):
 		print("%s的移动能力还在冷却"%[self.description])
