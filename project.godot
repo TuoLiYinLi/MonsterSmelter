@@ -48,6 +48,21 @@ _global_script_classes=[ {
 "class": "PathFinder",
 "language": "GDScript",
 "path": "res://System/PathFinder/PathFinder.gd"
+}, {
+"base": "Node2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://System/Projectile/Projectile.gd"
+}, {
+"base": "Node2D",
+"class": "SpawnManager",
+"language": "GDScript",
+"path": "res://System/SpawnManager/SpawnManager.gd"
+}, {
+"base": "Node2D",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://System/Weapon/Weapon.gd"
 } ]
 _global_script_class_icons={
 "BattleEntity": "",
@@ -57,7 +72,10 @@ _global_script_class_icons={
 "Grid": "",
 "GridManager": "",
 "Map": "",
-"PathFinder": ""
+"PathFinder": "",
+"Projectile": "",
+"SpawnManager": "",
+"Weapon": ""
 }
 
 [application]

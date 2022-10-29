@@ -3,7 +3,6 @@
 [ext_resource path="res://System/BattleEntity/BattleEntity.gd" type="Script" id=1]
 [ext_resource path="res://Texture/BattleEntity/SlimeMove.png" type="Texture" id=2]
 
-
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 32, 32 )
 
@@ -48,6 +47,8 @@ shape = SubResource( 6 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 playing = true
+
+[node name="weapon_pivot" type="Node2D" parent="."]
 
 [node name="TextEdit" type="TextEdit" parent="."]
 margin_left = -16.0

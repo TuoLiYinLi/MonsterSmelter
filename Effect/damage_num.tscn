@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Theme/my_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Effect/damage_num.gd" type="Script" id=2]
+
+[node name="damage_num" type="Node2D"]
+z_index = 1
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource( 1 )
+text = "1234567890"

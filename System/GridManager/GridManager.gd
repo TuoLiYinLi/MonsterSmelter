@@ -5,6 +5,9 @@
 extends Node2D
 class_name GridManager
 
+# 预加载网格
+var grid_scene:PackedScene = load("res://System/GridManager/Grid.tscn")
+
 var width:int = 0
 var height:int = 0
 
@@ -21,7 +24,7 @@ func init_grids(_width:int, _height:int):
 		var n = Node2D.new()
 		add_child(n)
 		for y in range(_height):
-			var g = G.grid.instance()
+			var g = grid_scene.instance()
 			n.add_child(g)
 			g.index_x = x
 			g.index_y = y
@@ -92,3 +95,7 @@ func to_navigate_matrix(instance:Object, method_name:String)->Array:
 			row.append(res)
 			
 	return out
+
+# 计算两个网格之间的距离
+func distance(grid1, grid2)->int:
+	return int(abs(grid1.index_x - grid2.index_x) + abs(grid1.index_y - grid2.index_y))

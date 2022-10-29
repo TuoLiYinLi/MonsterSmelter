@@ -6,9 +6,6 @@ extends Node2D
 func _ready():
 	$TextEdit.text = self.description
 
-# 已经锁定的攻击目标
-var target:BattleEntity = null
-
 # 此实体的信息文字说明
 var description:String = "default_battle_entity_info"
 
@@ -197,15 +194,6 @@ func set_rebound_proportion(f:float)->void:
 var burning_cd:float = 0
 
 func _physics_process(delta:float):
-	# 攻击冷却
-	if(attack_cd > 0):
-		attack_cd -= self.attack_speed * delta
-
-	# 攻击敌人
-	if(attack_cd <= 0 and target != null and is_instance_valid(target)):
-		
-		offence(target)
-		attack_cd += 1
 	
 	# 燃烧效果
 	if(burning_cd > 0):
@@ -222,9 +210,16 @@ func _physics_process(delta:float):
 		self.health_current += self.health_recovery * delta
 		#能量恢复（Z）
 		self.energy_current += self.energy_recover * delta
-		
-	# 移动角色
 	
+	# 武器产生作用
+	if(self.weapon):
+		self.weapon.behavior()
+	
+	# 攻击冷却
+	if(attack_cd > 0):
+		attack_cd -= self.attack_speed * delta
+	
+	# 移动角色
 	var delta_posi:Vector2 = (next_position- last_position) * delta * G.MOVING_SPEED
 	if(delta_posi):
 		is_moving = true
@@ -239,12 +234,14 @@ func _physics_process(delta:float):
 			on_enter_grid(target_grid)
 	else:
 		is_moving = false
-	
+		
+	# 移动CD
 	if(moving_cd > 0):
 		moving_cd -= delta
 
 # 发动进攻
 func offence(be:BattleEntity):
+	attack_cd += 1
 	
 	print("%s 发起攻击 %s" % [self.description, be.description])
 	
@@ -272,6 +269,12 @@ func offence(be:BattleEntity):
 	# 造成的真实伤害
 	var damage:float = max(self.attack*crit - is_blocked * be.armor, 0)
 	be.health_current -= damage
+	
+	var n = G.damage_num.instance()
+	get_node("/root/G").add_child(n)
+	n.position = be.global_position
+	n.text = damage
+	
 	# 触发
 	on_attack(be)
 	be.on_hit_by(self)
@@ -279,17 +282,17 @@ func offence(be:BattleEntity):
 #	print("%s的实际护甲率是%s"%[be.description,real_armor_rate])
 	
 	if(is_blocked == 0):
-		print("%s的护甲被穿透了，受到%s伤害，剩下生命值%s"%[be.description,damage,be.health_current])
+		print("%s的护甲被穿透了，受到%s伤害，剩下生命值%s" % [be.description, damage, be.health_current])
 	else:
-		print("%s的护甲挡住了%s伤害，受到%s伤害，剩下生命值%s"%[be.description,be.armor,damage,be.health_current])
+		print("%s的护甲挡住了%s伤害，受到%s伤害，剩下生命值%s" % [be.description, be.armor, damage, be.health_current])
 		
 		
 	#是否触发反伤Z
-	var rebound_damage=0
-	if(randf()<=be.rebound_rate):
-		rebound_damage=damage*be.rebound_proportion
-		self.health_current-=rebound_damage
-		print("%s的攻击触发了%s的反伤，造成了%s伤害，%s剩余%s生命"%[self.description,be.description,rebound_damage,self.description,self.health_current])
+	var rebound_damage = 0
+	if(randf() <= be.rebound_rate):
+		rebound_damage = damage*be.rebound_proportion
+		self.health_current -= rebound_damage
+		print("%s的攻击触发了%s的反伤，造成了%s伤害，%s剩余%s生命" % [self.description, be.description, rebound_damage, self.description, self.health_current])
 	
 	print("---------------------------------------------------------------------------")
 
@@ -385,4 +388,17 @@ func on_enter_grid(_grid):
 
 
 #---------------------------------------------------------------------------
+# 武器系统
+
+# 已经锁定的攻击目标
+var attack_target:BattleEntity = null
+
+# 获取我的武器
+var weapon = null setget ,get_weapon
+func get_weapon():
+	if($weapon_pivot.get_child_count() == 0):
+		return null
+	else:
+		return $weapon_pivot.get_child(0)
+
 

@@ -4,9 +4,7 @@
 extends Node2D
 
 func _ready():
-	var gm = G.grid_manager.instance()
-	
-	add_child(gm)
+	var gm = G.grid_manager
 	
 	gm.init_grids(10,10)
 	
@@ -37,16 +35,22 @@ func _ready():
 	
 	var m1 = G.battle_entity.instance()
 	add_child(m1)
-	m1.teleport_to(gm.get_grid_at(5,1))
+	m1.teleport_to(gm.get_grid_at(5,8))
 	m1.description = "p1"
 	
-	while(true):
-		yield(get_tree().create_timer(0.5),"timeout")
-		var mt = gm.to_navigate_matrix(G,"simple_navigate_matrix")
-		
-		for i in mt:
-			print(i)
-		
-		var ns = PathFinder.next_step(mt,m1.grid.index_x,m1.grid.index_y,8,8)
-		if(ns):
-			m1.move_to(gm.get_grid_at(ns[0],ns[1]))
+	var w1 = G.weapon.instance()
+	m1.get_node("weapon_pivot").add_child(w1)
+	
+	var m2 = G.battle_entity.instance()
+	add_child(m2)
+	m2.teleport_to(gm.get_grid_at(1,7))
+	m2.description = "p2"
+	
+	m2.moving_cd = 0.5
+	
+	var w2 = G.weapon.instance()
+	m2.get_node("weapon_pivot").add_child(w2)
+	
+	m1.attack_target = m2
+	m2.attack_target = m1
+	
