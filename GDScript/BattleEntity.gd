@@ -444,31 +444,34 @@ func clear(a:Array, b:Array, c:Array, d:Array, e:Array):#数组清空方便下�
 
 #---------------------------------------------------------------------------
 
-func move_Z(grid_map):
+func move_Z(gm):
 	
 	if(is_moving or moving_cd>0):
 		print("%s的移动能力还在冷却"%[self.description])
 		return
 	else:
-		#动态生成地图	，可能是函数传参的限制，只能在这里生成地图Z
-		var map:Array
-		for i in range(len(grid_map[0])):
-			map.append([])
-			for j in len(grid_map):
-				map[i].append(int(grid_map[i][j].grid_building))
-				if(int(grid_map[i][j].grid_role)!=0):
-					map[i][j]+=2
+		#动态生成地图Z
+		var map=gm.to_navigate_matrix(G,"simple_navigate_matrix")
+		for i in range(len(map[0])):
+			print(map[i])
+#		var map:Array
+#		for i in range(len(grid_map[0])):
+#			map.append([])
+#			for j in len(grid_map):
+#				map[i].append(int(grid_map[i][j].grid_building))
+#				if(int(grid_map[i][j].grid_role)!=0):
+#					map[i][j]+=2
+		var pf:PathFinding = G.path_finding.instance()
+		#进入寻路算法获取最短路径 Z
+		var route = pf.bfs(map,position,target_position)
 			
-		
+
 		#进入寻路算法有路输出true Z
-		if bfs(map, position, target_position):
-			#获取最短路径 Z
-			route = get_route(father, pre_route)
-			#下面两行修改grid_map中的角色 Z
-			grid_map[int(position.y/64)][int(position.x/64)].change_role(0)	
-			next_position.x = route[1][1]*64 + 32
-			next_position.y = route[1][0]*64 + 32				
-			grid_map[int(next_position.y/64)][int(next_position.x/64)].change_role(self.description)	
+		if route!= []:
+			#grid_map[int(position.y/64)][int(position.x/64)].change_role(0)	
+			next_position.x = route[1][0]*64 + 32
+			next_position.y = route[1][1]*64 + 32				
+			#grid_map[int(next_position.y/64)][int(next_position.x/64)].change_role(self.description)	
 		clear(route, visited, father, pre_route, q)#清空所有数组内的数据，优化内存Z
 		moving_cd += 1
 		

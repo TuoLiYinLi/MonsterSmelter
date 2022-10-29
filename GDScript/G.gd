@@ -28,6 +28,9 @@ var grid_manager:PackedScene = load("res://Scene/GridManager.tscn")
 
 var building:PackedScene = load("res://Scene/Building.tscn")
 
+#寻路算法Z
+var path_finding:PackedScene = load("res://Scene/PathFinding.tscn")
+
 # 点燃基因
 var gene_ignite:PackedScene = load("res://Scene/gene_ignite.tscn")
 # 能量消耗Z
