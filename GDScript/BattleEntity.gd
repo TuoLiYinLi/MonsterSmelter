@@ -384,92 +384,36 @@ func on_enter_grid(_grid):
 	else:
 		printerr("进入网格时，网格不存在")
 
-#动态规划寻路算法（BFS宽度优先搜索）Z
-#--------------------------------------------------------
-var pre_route = [] # 宽度搜索得到的节点
-var q = []  # 队列结构控制循环次数
-var xx = [0, 1, 0, -1] # 右移、下移、左移、上移
-var yy = [1, 0, -1, 0]
-var visited = []  # 记录节点是否已遍历
-var father = []  # 每一个pre_route节点的父节点
-var route = []
-
-func bfs(map, start_position, dinal_position):
-	var x:int = start_position.y/64
-	var y:int = start_position.x/64
-	var m:int = dinal_position.y/64
-	var n:int = dinal_position.x/64
-	print(x,y,m,n)
-	for i in range(len(map[0])):
-		visited.push_back([])
-		for j in range(len(map)):
-			visited[i].push_back(0)
-	visited[x][y] = 1 # 入口节点设置为已遍历
-	q.push_back([x,y])
-	while !q.empty(): # 队列为空则结束循环
-		var now = q[0] 
-		q.pop_at(0) # 移除队列头结点
-		for i in range(4):
-			var point = [now[0] + xx[i], now[1] + yy[i]]#当前节点
-			if point[0]<0 or point[1]<0 or point[0]>=len(map) or point[1] >= len(map[0]) or visited[point[0]][point[1]]==1 or map[point[0]][point[1]]!=0 :
-				continue
-			father.push_back(now)
-			visited[point[0]][point[1]] = 1
-			q.push_back((point))
-			pre_route.push_back(point)
-			if point[0] == m and point[1] == n:
-				print("success")
-				return 1
-	print("false")
-	return 0
 
 
-func get_route(father, pre_route): #寻找并输出最短路径Z
-	route = [pre_route[-1], father[-1]]
-	for i in range(len(pre_route) -1, -1, -1):
-		if pre_route[i] == route[-1]:
-			route.push_back(father[i])			
-	route.invert()
-	print("最短路径为：",route)
-	print("步长",len(route)-1)
-	return route
-				
 
-func clear(a:Array, b:Array, c:Array, d:Array, e:Array):#数组清空方便下次运算Z
-	a.clear()
-	b.clear()
-	c.clear()
-	d.clear()
-	e.clear()
-
-#---------------------------------------------------------------------------
-
-func move_Z(grid_map):
+func move_Z(gm):
 	
 	if(is_moving or moving_cd>0):
 		print("%s的移动能力还在冷却"%[self.description])
 		return
 	else:
-		#动态生成地图	，可能是函数传参的限制，只能在这里生成地图Z
-		var map:Array
-		for i in range(len(grid_map[0])):
-			map.append([])
-			for j in len(grid_map):
-				map[i].append(int(grid_map[i][j].grid_building))
-				if(int(grid_map[i][j].grid_role)!=0):
-					map[i][j]+=2
-			
+		#动态生成地图Z
+		var map=gm.to_navigate_matrix(G,"simple_navigate_matrix")
+		for i in range(len(map[0])):
+			print(map[i])
+#		var map:Array
+#		for i in range(len(grid_map[0])):
+#			map.append([])
+#			for j in len(grid_map):
+#				map[i].append(int(grid_map[i][j].grid_building))
+#				if(int(grid_map[i][j].grid_role)!=0):
+#					map[i][j]+=2
+		var pf:PathFinding = G.path_finding.instance()
+		#进入寻路算法获取最短路径 Z
+		var route = pf.bfs(map,position,target_position)
 		
-		#进入寻路算法有路输出true Z
-		if bfs(map, position, target_position):
-			#获取最短路径 Z
-			route = get_route(father, pre_route)
+		if route!= []:			
 			#下面两行修改grid_map中的角色 Z
-			grid_map[int(position.y/64)][int(position.x/64)].change_role(0)	
-			next_position.x = route[1][1]*64 + 32
-			next_position.y = route[1][0]*64 + 32				
-			grid_map[int(next_position.y/64)][int(next_position.x/64)].change_role(self.description)	
-		clear(route, visited, father, pre_route, q)#清空所有数组内的数据，优化内存Z
+			#grid_map[int(position.y/64)][int(position.x/64)].change_role(0)	
+			next_position.x = route[1][0]*64 + 32
+			next_position.y = route[1][1]*64 + 32				
+			#grid_map[int(next_position.y/64)][int(next_position.x/64)].change_role(self.description)	
 		moving_cd += 1
 		
 		#match(direction):ne

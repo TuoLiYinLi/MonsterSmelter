@@ -102,6 +102,7 @@ func _ready():
 	m3.description = "p3"
 	self.add_child(m3) 
 	
+	
 	m1.position = Vector2(96,160)	
 	m1.next_position = Vector2(96,160)
 	m1.last_position = Vector2(96,160)
