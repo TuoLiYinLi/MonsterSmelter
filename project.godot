@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Building",
 "language": "GDScript",
-"path": "res://GDScript/Building.gd"
+"path": "res://Scene/Building.gd"
 }, {
 "base": "Node2D",
 "class": "Gene",
@@ -43,11 +43,6 @@ _global_script_classes=[ {
 "class": "Map",
 "language": "GDScript",
 "path": "res://GDScript/test_2.gd"
-}, {
-"base": "Node",
-"class": "PathFinding",
-"language": "GDScript",
-"path": "res://GDScript/PathFinding.gd"
 } ]
 _global_script_class_icons={
 "BattleEntity": "",
@@ -56,8 +51,7 @@ _global_script_class_icons={
 "GeneIgnite": "",
 "Grid": "",
 "GridManager": "",
-"Map": "",
-"PathFinding": ""
+"Map": ""
 }
 
 [application]
