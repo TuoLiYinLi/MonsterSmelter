@@ -50,7 +50,7 @@ var tags:Array = []
 var description:String = "default_gene_info"
 
 # 当正在燃烧时，每帧触发 delta是间隔时间
-func on_burning(delta:float):
+func on_burning(_delta:float):
 	pass
 
 # 当死亡时，单帧触发
@@ -58,11 +58,11 @@ func on_dead():
 	pass
 
 # 当击中敌人时 enemy是击中的敌人
-func on_attack(enemy):
+func on_attack(_enemy):
 	print("击中敌人时恢复1生命值触发了")
 	get_parent().get_parent().health_current += 1
 
-func on_hit_by(enemy):
+func on_hit_by(_enemy):
 	pass
 
 

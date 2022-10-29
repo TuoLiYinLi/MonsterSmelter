@@ -17,34 +17,21 @@ enum DIRECTION{
 }
 
 # 预加载的战斗实体场景
-var battle_entity:PackedScene = load("res://Scene/BattleEntity.tscn")
+var battle_entity:PackedScene = load("res://System/BattleEntity/BattleEntity.tscn")
 # 预加载的基因场景
-var gene:PackedScene = load("res://Scene/Gene.tscn")
+var gene:PackedScene = load("res://System/BattleEntity/Gene.tscn")
 
 # 预加载网格
-var grid:PackedScene = load("res://Scene/Grid.tscn")
+var grid:PackedScene = load("res://System/GridManager/Grid.tscn")
 # 预加载的网格管理器
-var grid_manager:PackedScene = load("res://Scene/GridManager.tscn")
+var grid_manager:PackedScene = load("res://System/GridManager/GridManager.tscn")
 
-var building:PackedScene = load("res://Scene/Building.tscn")
-
-#寻路算法Z
-var path_finding:PackedScene = load("res://Scene/PathFinding.tscn")
+var building:PackedScene = load("res://System/Building/Building.tscn")
 
 # 点燃基因
-var gene_ignite:PackedScene = load("res://Scene/gene_ignite.tscn")
+var gene_ignite:PackedScene = load("res://gene_ignite.tscn")
 # 能量消耗Z
 #var gene_ignite2:PackedScene = load("res://Scene/gene_ignite2.tscn")
-
-
-# 检测区域内的战斗实体
-func detect_battle_entity_range(from:Vector2, to:Vector2) -> Array:
-	return []
-
-# 检测特定一格的战斗实体
-func detect_battle_entity_at(posi:Vector2):
-	
-	return 
 
 # ----------------------------------------------------------------------
 # 导出寻路网格

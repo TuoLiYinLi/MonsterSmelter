@@ -12,42 +12,42 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "BattleEntity",
 "language": "GDScript",
-"path": "res://GDScript/BattleEntity.gd"
+"path": "res://System/BattleEntity/BattleEntity.gd"
 }, {
 "base": "Node2D",
 "class": "Building",
 "language": "GDScript",
-"path": "res://GDScript/Building.gd"
+"path": "res://System/Building/Building.gd"
 }, {
 "base": "Node2D",
 "class": "Gene",
 "language": "GDScript",
-"path": "res://GDScript/Gene.gd"
+"path": "res://System/BattleEntity/Gene.gd"
 }, {
 "base": "Gene",
 "class": "GeneIgnite",
 "language": "GDScript",
-"path": "res://GDScript/gene_ignite.gd"
+"path": "res://gene_ignite.gd"
 }, {
 "base": "Node2D",
 "class": "Grid",
 "language": "GDScript",
-"path": "res://GDScript/Grid.gd"
+"path": "res://System/GridManager/Grid.gd"
 }, {
 "base": "Node2D",
 "class": "GridManager",
 "language": "GDScript",
-"path": "res://GDScript/GridManager.gd"
+"path": "res://System/GridManager/GridManager.gd"
 }, {
 "base": "Node2D",
 "class": "Map",
 "language": "GDScript",
-"path": "res://GDScript/test_2.gd"
+"path": "res://test_2.gd"
 }, {
-"base": "Node",
-"class": "PathFinding",
+"base": "Reference",
+"class": "PathFinder",
 "language": "GDScript",
-"path": "res://GDScript/PathFinding.gd"
+"path": "res://System/PathFinder/PathFinder.gd"
 } ]
 _global_script_class_icons={
 "BattleEntity": "",
@@ -57,17 +57,17 @@ _global_script_class_icons={
 "Grid": "",
 "GridManager": "",
 "Map": "",
-"PathFinding": ""
+"PathFinder": ""
 }
 
 [application]
 
 config/name="MonsterSmelter"
-run/main_scene="res://Scene/test_3.tscn"
+run/main_scene="res://test_3.tscn"
 
 [autoload]
 
-G="*res://GDScript/G.gd"
+G="*res://System/Global/G.gd"
 
 [display]
 
