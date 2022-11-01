@@ -29,12 +29,20 @@ func behavior():
 				get_host().offence(get_target())
 		# 在范围外则进行寻路靠近目标
 		else:
+			#使用权值地图计算 Z
 			if(get_host().moving_cd <= 0):
-				var mt = G.grid_manager.to_navigate_matrix(G,"simple_navigate_matrix")
-				var ns = PathFinder.next_step(mt, get_host().grid.index_x, get_host().grid.index_y, get_target().grid.index_x, get_target().grid.index_y)
+				var mt = G.grid_manager.to_navigate_matrix(G,"simple_navigate_weight_matrix")				
+				var ns = G.path_finder.next_step_A(mt, get_host().grid.index_x, get_host().grid.index_y, get_target().grid.index_x, get_target().grid.index_y)
 				if(ns):
 					get_host().move_to(G.grid_manager.get_grid_at(ns[0], ns[1]))
 				print("[Weapon] 角色导航中")
+			#使用普通地图计算 Z
+#			if(get_host().moving_cd <= 0):
+#				var mt = G.grid_manager.to_navigate_matrix(G,"simple_navigate_matrix")				
+#				var ns = PathFinder.next_step(mt, get_host().grid.index_x, get_host().grid.index_y, get_target().grid.index_x, get_target().grid.index_y)
+#				if(ns):
+#					get_host().move_to(G.grid_manager.get_grid_at(ns[0], ns[1]))
+#				print("[Weapon] 角色导航中")
 #			else:
 #				print("[Weapon] 角色移动冷却")
 				

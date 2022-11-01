@@ -44,7 +44,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://test_2.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "PathFinder",
 "language": "GDScript",
 "path": "res://System/PathFinder/PathFinder.gd"

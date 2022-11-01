@@ -84,7 +84,7 @@ func to_navigate_matrix(instance:Object, method_name:String)->Array:
 	if(export_method == null or !export_method.is_valid()):
 		printerr("[GridManager] 调用的函数不可用 %s" % export_method)
 		return []
-		
+	
 	# 开始导出
 	var out:Array = []
 	for column in get_children():
@@ -95,6 +95,7 @@ func to_navigate_matrix(instance:Object, method_name:String)->Array:
 			row.append(res)
 			
 	return out
+
 
 # 计算两个网格之间的距离
 func distance(grid1, grid2)->int:

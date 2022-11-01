@@ -402,3 +402,8 @@ func get_weapon():
 		return $weapon_pivot.get_child(0)
 
 
+#测试用：判断是否有多目标 测试多目标寻路用 Z
+#--------------------------------
+var test=1
+var target_position_list:Array
+#--------------------------------

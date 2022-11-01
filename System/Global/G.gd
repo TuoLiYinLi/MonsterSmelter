@@ -25,6 +25,17 @@ func get_grid_manager():
 		add_child(grid_manager)
 	return grid_manager
 
+#寻路 Z
+var path_finder = null setget , get_path_finder
+func get_path_finder():
+	if(!path_finder):
+		path_finder = load("res://System/PathFinder/PathFinder.tscn").instance()
+		add_child(path_finder)
+	return path_finder
+
+
+
+
 # 预加载的战斗实体场景
 var battle_entity:PackedScene = load("res://System/BattleEntity/BattleEntity.tscn")
 
@@ -42,8 +53,8 @@ var damage_num = load("res://Effect/damage_num.tscn")
 
 # 点燃基因
 var gene_ignite:PackedScene = load("res://gene_ignite.tscn")
-# 能量消耗Z
-#var gene_ignite2:PackedScene = load("res://Scene/gene_ignite2.tscn")
+
+
 
 
 # ----------------------------------------------------------------------
@@ -54,3 +65,11 @@ func simple_navigate_matrix(_grid)->float:
 	if(_grid.building != null):
 		return 1.0
 	return 0.0
+
+# 导出权重寻路网格 z
+func simple_navigate_weight_matrix(_grid)->float:
+	if(_grid.battle_entity != null):
+		return 500.0
+	if(_grid.building != null):
+		return 99999.0
+	return 1.0
