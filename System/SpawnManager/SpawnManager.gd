@@ -8,3 +8,4 @@ class_name SpawnManager
 # 根据你的选项生成一个物体
 func spawn(option:Dictionary):
 	pass
+	

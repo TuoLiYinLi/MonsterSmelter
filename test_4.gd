@@ -35,21 +35,36 @@ func _ready():
 	
 	var m1 = G.battle_entity.instance()
 	add_child(m1)
-	m1.teleport_to(gm.get_grid_at(5,8))
+	m1.teleport_to(gm.get_grid_at(1,2))
 	m1.description = "p1"
 	
 	var w1 = G.weapon.instance()
 	m1.get_node("weapon_pivot").add_child(w1)
 	
-	#目标点列表
-	var target_position_list = [[2,6],[3,8],[8,8]]
-	var mt = G.grid_manager.to_navigate_matrix(G,"simple_navigate_matrix")
-	var ma = G.grid_manager.to_navigate_matrix(G,"simple_navigate_weight_matrix")
-		
-	#进入列表寻路
-	print("普通地图计算最短路径的点为",G.path_finder.next_step_multi(mt,5,8,target_position_list))
-	print("权重地图计算最短路径的点为",G.path_finder.next_step_multi_A(ma,5,8,target_position_list))
+	var m2 = G.battle_entity.instance()
+	add_child(m2)
+	m2.teleport_to(gm.get_grid_at(7,2))
+	m2.description = "p2"
 	
-	var ss = G.grid_manager.to_navigate_matrix(G,"simple_navigate_weight_matrix")
+	var w2 = G.weapon.instance()
+	m2.get_node("weapon_pivot").add_child(w2)
+	
+	
+	m1.attack_target = m2
+	m2.attack_target = m1
+	
+#	#目标点列表
+#	var target_position_list = [[2,6],[3,8],[8,8]]
+#	var mt = G.grid_manager.to_navigate_matrix(G,"simple_navigate_matrix")
+#	var ma = G.grid_manager.to_navigate_matrix(G,"simple_navigate_weight_matrix")
+#
+#	#进入列表寻路
+#	print("普通地图计算最短路径的点为",G.path_finder.next_step_multi(mt,5,8,target_position_list))
+#	print("权重地图计算最短路径的点为",G.path_finder.next_step_multi_A(ma,5,8,target_position_list))
+#
+#	var ss = G.grid_manager.to_navigate_matrix(G,"simple_navigate_weight_matrix")
 	
 	#print(G.path_finder.next_step_A(ss,1,1,8,8))
+	
+	
+	

@@ -100,3 +100,33 @@ func to_navigate_matrix(instance:Object, method_name:String)->Array:
 # 计算两个网格之间的距离
 func distance(grid1, grid2)->int:
 	return int(abs(grid1.index_x - grid2.index_x) + abs(grid1.index_y - grid2.index_y))
+	
+
+#up 1 down 2 left 3 right 4
+
+#判断范围内有没有敌人Z
+func finder_enemy(distance:int,grid)->int:
+	#导出普通地图
+	var mt = to_navigate_matrix(G,"simple_navigate_matrix")
+	
+	#检测x轴上是否有怪物
+	for i in range(grid.index_x-distance,grid.index_x+distance+1):
+		if i<0 or i>=len(mt[0]) or i == grid.index_x:
+			continue
+		if mt[i][grid.index_y] == 2:
+			if i > grid.index_x:
+				return 4
+			else:
+				return 3
+	
+	#检测y轴上是否有怪物
+	for i in range(grid.index_y-distance,grid.index_y+distance+1):
+		if i<0 or i>=len(mt[0]) or i == grid.index_y:
+			continue
+		if mt[grid.index_x][i] == 2:
+			if i > grid.index_y:
+				return 2
+			else:
+				return 1
+	
+	return 0

@@ -125,7 +125,7 @@ func A(map,x:int,y:int,m:int,n:int):
 		#所有情况变量控制写在这
 		if next_x >= len(map[0]) or next_x < 0 or next_y >= len(map[0]) or next_y < 0 or (next_x == start_position[0] and next_y ==start_position[1]):
 			continue
-		if map[next_x][next_y] == 1 or map[next_x][next_y] == 500:
+		if map[next_x][next_y] == 1 or map[next_x][next_y] == 500 or map[next_x][next_y] == 99999:
 			map[next_x][next_y] = map[x][y] + map[next_x][next_y]
 			A(map,next_x, next_y, m, n)
 		elif map[x][y] + map2[next_x][next_y] < map[next_x][next_y]:
@@ -140,7 +140,7 @@ func get_A_route(map,start_x,start_y,final_x,final_y)->Array:
 	var next_y
 	var start = [final_x, final_y]
 	while start_x != start[0] or start_y != start[1]:
-		var mins = 100000
+		var mins = 10000000
 		next_x = 0
 		next_y = 0
 		final_x = start[0]

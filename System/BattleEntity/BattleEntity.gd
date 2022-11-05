@@ -229,7 +229,8 @@ func _physics_process(delta:float):
 		else:
 			position += delta_posi
 		
-		if(target_grid != grid and (position - next_position).length_squared()<(position - last_position).length_squared()):
+#		if(target_grid != grid and (position - next_position).length_squared()<(position - last_position).length_squared()):
+		if(target_grid != grid):
 			on_leave_grid()
 			on_enter_grid(target_grid)
 	else:
@@ -241,8 +242,6 @@ func _physics_process(delta:float):
 
 # 发动进攻
 func offence(be:BattleEntity):
-	attack_cd += 1
-	
 	print("%s 发起攻击 %s" % [self.description, be.description])
 	
 	# 实际的护甲率
@@ -350,13 +349,19 @@ var moving_cd:float = 0
 
 # 开始向目标网格移动
 func move_to(_target_grid):
+	# 冷却
 	if(is_moving or moving_cd>0):
 		print("%s的移动能力还在冷却" % [self.description])
 		return
 	else:
-		moving_cd += 1
-		target_grid = _target_grid
-		next_position = _target_grid.position
+		# 网格可用性检查
+		var g = G.grid_manager.get_grid_at(_target_grid.index_x,_target_grid.index_y)
+		if(!g.building and !g.battle_entity):
+			moving_cd += 1
+			target_grid = _target_grid
+			next_position = _target_grid.position
+		else:
+			printerr("[BattleEntity] 网格阻挡，取消移动")
 
 # 直接将当前战斗实体传送到目标位置
 func teleport_to(_target_grid):
@@ -407,3 +412,7 @@ func get_weapon():
 var test=1
 var target_position_list:Array
 #--------------------------------
+
+#------------------------------------------------------
+func is_BattleEntity():
+	pass

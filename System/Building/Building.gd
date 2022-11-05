@@ -9,3 +9,6 @@ var grid = null setget set_grid
 func set_grid(g):
 	grid = g
 	position = grid.position
+
+func xxx():
+	pass

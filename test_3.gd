@@ -21,6 +21,12 @@ func _ready():
 			grid.building = b
 			b.grid = grid
 			
+#	for grid in gm.get_grids_range(3,1,3,4):
+#			var b = G.building.instance()
+#			add_child(b)
+#			grid.building = b
+#			b.grid = grid
+			
 	for grid in gm.get_grids_range(5,4,6,4):
 			var b = G.building.instance()
 			add_child(b)
@@ -35,7 +41,7 @@ func _ready():
 	
 	var m1 = G.battle_entity.instance()
 	add_child(m1)
-	m1.teleport_to(gm.get_grid_at(5,8))
+	m1.teleport_to(gm.get_grid_at(9,8))
 	m1.description = "p1"
 	
 	var w1 = G.weapon.instance()
@@ -43,13 +49,15 @@ func _ready():
 	
 	var m2 = G.battle_entity.instance()
 	add_child(m2)
-	m2.teleport_to(gm.get_grid_at(1,7))
+	m2.teleport_to(gm.get_grid_at(1,6))
 	m2.description = "p2"
 	
-	m2.moving_cd = 0.5
+	
+#	m2.moving_cd = 0.5
 	
 	var w2 = G.weapon.instance()
 	m2.get_node("weapon_pivot").add_child(w2)
+	
 	
 	m1.attack_target = m2
 	m2.attack_target = m1

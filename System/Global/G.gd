@@ -54,14 +54,15 @@ var damage_num = load("res://Effect/damage_num.tscn")
 # 点燃基因
 var gene_ignite:PackedScene = load("res://gene_ignite.tscn")
 
-
+#发射子弹
+var projectile:PackedScene = load("res://System/Projectile/Projectile.tscn")
 
 
 # ----------------------------------------------------------------------
 # 导出寻路网格
 func simple_navigate_matrix(_grid)->float:
 	if(_grid.battle_entity != null):
-		return 0.0
+		return 2.0
 	if(_grid.building != null):
 		return 1.0
 	return 0.0
