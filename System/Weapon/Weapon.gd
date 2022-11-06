@@ -31,7 +31,8 @@ func behavior():
 				print("[Weapon] 进入攻击范围，发动战斗")
 #				get_host().offence(get_target())
 				#生成子弹 Z
-				var bullet=G.projectile.instance()
+				print("[Weapon] 发射子弹")
+				var bullet = G.projectile.instance()
 				bullet.set_host(get_host(),direction)
 				get_host().get_parent().add_child(bullet)
 				bullet.global_position = global_position

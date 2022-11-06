@@ -40,6 +40,11 @@ _global_script_classes=[ {
 "path": "res://System/GridManager/GridManager.gd"
 }, {
 "base": "Node2D",
+"class": "Ground",
+"language": "GDScript",
+"path": "res://System/Ground/Ground.gd"
+}, {
+"base": "Node2D",
 "class": "Map",
 "language": "GDScript",
 "path": "res://test_2.gd"
@@ -71,6 +76,7 @@ _global_script_class_icons={
 "GeneIgnite": "",
 "Grid": "",
 "GridManager": "",
+"Ground": "",
 "Map": "",
 "PathFinder": "",
 "Projectile": "",
@@ -91,6 +97,10 @@ G="*res://System/Global/G.gd"
 
 window/size/width=640
 window/size/height=640
+
+[logging]
+
+file_logging/enable_file_logging=true
 
 [physics]
 

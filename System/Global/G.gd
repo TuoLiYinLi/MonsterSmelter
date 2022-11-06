@@ -6,7 +6,7 @@ extends Node2D
 const BURNING_RATE:float = 0.01
 
 # 移动耗时系数
-const MOVING_SPEED:float = 10.0
+const MOVING_SPEED:float = 5.0
 
 # 移动的不同方向
 enum DIRECTION{
@@ -17,24 +17,22 @@ enum DIRECTION{
 }
 
 # 网格管理器单例
-var grid_manager = null setget , get_grid_manager
-func get_grid_manager():
-	if(!grid_manager):
-		print("[G] GridManager 初始化")
-		grid_manager = load("res://System/GridManager/GridManager.tscn").instance()
-		add_child(grid_manager)
-	return grid_manager
+var grid_manager:GridManager
 
 #寻路 Z
-var path_finder = null setget , get_path_finder
-func get_path_finder():
-	if(!path_finder):
-		path_finder = load("res://System/PathFinder/PathFinder.tscn").instance()
-		add_child(path_finder)
-	return path_finder
+var path_finder:PathFinder
+
+var spawn_manager:SpawnManager
 
 
+var battle_entity_pivot:Node2D
+var projectile_pivot:Node2D
 
+# 所有的building对象节点都放在这个节点下
+var building_pivot:Node2D
+
+# 所有的ground对象节点都放在这个节点下
+var ground_pivot:Node2D
 
 # 预加载的战斗实体场景
 var battle_entity:PackedScene = load("res://System/BattleEntity/BattleEntity.tscn")
@@ -57,6 +55,30 @@ var gene_ignite:PackedScene = load("res://gene_ignite.tscn")
 #发射子弹
 var projectile:PackedScene = load("res://System/Projectile/Projectile.tscn")
 
+
+func _ready():
+	print("[G] 准备初始化")
+	print("[G] 加载 ground_pivot")
+	ground_pivot = Node2D.new()
+	add_child(ground_pivot)
+	
+	print("[G] 加载 building_pivot")
+	building_pivot = Node2D.new()
+	add_child(building_pivot)
+	
+	print("[G] 加载 grid_manager")
+	grid_manager = load("res://System/GridManager/GridManager.tscn").instance()
+	add_child(grid_manager)
+	
+	print("[G] 加载 path_finder")
+	path_finder = load("res://System/PathFinder/PathFinder.tscn").instance()
+	add_child(path_finder)
+	
+	print("[G] 加载 spawn_manager")
+	spawn_manager = load("res://System/SpawnManager/SpawnManager.tscn").instance()
+	add_child(spawn_manager)
+	
+	print("[G] 初始化完成")
 
 # ----------------------------------------------------------------------
 # 导出寻路网格

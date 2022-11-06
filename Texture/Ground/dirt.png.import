@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bool.png-b4950108255e1af065eda6df22965bd9.stex"
+path="res://.import/dirt.png-384da028ed12995592318d74f0cdedc8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Texture/Particle/bool.png"
-dest_files=[ "res://.import/bool.png-b4950108255e1af065eda6df22965bd9.stex" ]
+source_file="res://Texture/Ground/dirt.png"
+dest_files=[ "res://.import/dirt.png-384da028ed12995592318d74f0cdedc8.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

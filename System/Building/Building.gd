@@ -12,3 +12,8 @@ func set_grid(g):
 
 func xxx():
 	pass
+
+# 类似版本号
+var version:int = 0 setget set_version
+func set_version(value:int):
+	$Sprite.frame = value

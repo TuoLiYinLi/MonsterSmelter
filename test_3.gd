@@ -8,36 +8,19 @@ func _ready():
 	
 	gm.init_grids(10,10)
 	
-	for grid in gm.get_grids_range(3,3,3,8):
-		var b = G.building.instance()
-		add_child(b)
-		grid.building = b
-		b.grid = grid
+	for i in range(3,9):
+		G.spawn_manager.spawn_building_dirt_wall(3,i,randi()%3)
 
 	for i in [[0,0,0,8],[0,0,9,0],[9,1,9,9],[0,9,8,9]]:
 		for grid in gm.get_grids_range(i[0],i[1],i[2],i[3]):
-			var b = G.building.instance()
-			add_child(b)
-			grid.building = b
-			b.grid = grid
+			G.spawn_manager.spawn_building_dirt_wall(grid.index_x,grid.index_y,randi()%3)
 			
-#	for grid in gm.get_grids_range(3,1,3,4):
-#			var b = G.building.instance()
-#			add_child(b)
-#			grid.building = b
-#			b.grid = grid
 			
-	for grid in gm.get_grids_range(5,4,6,4):
-			var b = G.building.instance()
-			add_child(b)
-			grid.building = b
-			b.grid = grid
+	for i in range(5,7):
+		G.spawn_manager.spawn_building_dirt_wall(i,4,randi()%3)
 	
-	for grid in gm.get_grids_range(7,4,7,7):
-		var b = G.building.instance()
-		add_child(b)
-		grid.building = b
-		b.grid = grid
+	for i in range(4,8):
+		G.spawn_manager.spawn_building_dirt_wall(7,i,randi()%3)
 	
 	var m1 = G.battle_entity.instance()
 	add_child(m1)
@@ -62,3 +45,7 @@ func _ready():
 	m1.attack_target = m2
 	m2.attack_target = m1
 	
+	for i in range(10):
+		for j in range(10):
+			G.spawn_manager.spawn_ground_dirt(i,j,randi()%8)
+			

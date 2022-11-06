@@ -220,9 +220,10 @@ func _physics_process(delta:float):
 		attack_cd -= self.attack_speed * delta
 	
 	# 移动角色
-	var delta_posi:Vector2 = (next_position- last_position) * delta * G.MOVING_SPEED
+	var delta_posi:Vector2 = (next_position - last_position) * delta * G.MOVING_SPEED
 	if(delta_posi):
 		is_moving = true
+#		print("[delta_posi] ",delta_posi)
 		if((position - next_position).length_squared() <= delta_posi.length_squared()):
 			position = next_position
 			last_position = next_position
@@ -360,6 +361,7 @@ func move_to(_target_grid):
 			moving_cd += 1
 			target_grid = _target_grid
 			next_position = _target_grid.position
+		# 移动时外部环境的约束
 		else:
 			printerr("[BattleEntity] 网格阻挡，取消移动")
 

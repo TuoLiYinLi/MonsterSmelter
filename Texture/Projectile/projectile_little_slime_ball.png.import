@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/debug_physics_chara.png-0aad426d0929438b5703fb71b045834b.stex"
+path="res://.import/projectile_little_slime_ball.png-93b571c31b6bff30013f6a440d5cd773.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Texture/Misc/debug_physics_chara.png"
-dest_files=[ "res://.import/debug_physics_chara.png-0aad426d0929438b5703fb71b045834b.stex" ]
+source_file="res://Texture/Projectile/projectile_little_slime_ball.png"
+dest_files=[ "res://.import/projectile_little_slime_ball.png-93b571c31b6bff30013f6a440d5cd773.stex" ]
 
 [params]
 
