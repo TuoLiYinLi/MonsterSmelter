@@ -116,9 +116,9 @@ func finder_enemy(distance:int,grid)->int:
 			continue
 		if mt[i][grid.index_y] == 2:
 			if i > grid.index_x:
-				return 4
+				return Projectile.DIRECTION.RIGHT
 			else:
-				return 3
+				return Projectile.DIRECTION.LEFT
 	
 	#检测y轴上是否有怪物
 	for i in range(grid.index_y-distance,grid.index_y+distance+1):
@@ -126,8 +126,9 @@ func finder_enemy(distance:int,grid)->int:
 			continue
 		if mt[grid.index_x][i] == 2:
 			if i > grid.index_y:
-				return 2
+				return Projectile.DIRECTION.DOWN
 			else:
-				return 1
+				return Projectile.DIRECTION.UP
 	
-	return 0
+	return -1
+

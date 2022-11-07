@@ -10,7 +10,8 @@ func set_grid(g):
 	grid = g
 	position = grid.position
 
-func xxx():
+#检测函数Z
+func is_Building():
 	pass
 
 # 类似版本号

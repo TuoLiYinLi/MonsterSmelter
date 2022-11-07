@@ -107,10 +107,9 @@ func next_step_A(navigation_matrix,start_x,start_y,end_x,end_y)->Array:
 	#进入路径选择函数
 	var route = get_A_route(navigation_matrix,start_x,start_y,end_x,end_y)
 	
-	for i in range(len(navigation_matrix[0])):
-		print(navigation_matrix[i])
+#	for i in range(len(navigation_matrix[0])):
+#		print(navigation_matrix[i])
 	print(route)
-	
 	return [route[0][0],route[0][1]]
 	
 

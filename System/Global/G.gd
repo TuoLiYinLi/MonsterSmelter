@@ -68,6 +68,16 @@ func _ready():
 	building_pivot.name="building_pivot"
 	add_child(building_pivot)
 	
+	print("[G] 加载 battle_entity_pivot")
+	battle_entity_pivot = Node2D.new()
+	battle_entity_pivot.name='battle_entity_pivot'
+	add_child(battle_entity_pivot)
+	
+	print("[G] 加载  projectile_pivot")
+	projectile_pivot = Node2D.new()
+	projectile_pivot.name='projectile_pivot'
+	add_child(projectile_pivot)
+	
 	print("[G] 加载 grid_manager")
 	grid_manager = load("res://System/GridManager/GridManager.tscn").instance()
 	add_child(grid_manager)
@@ -79,6 +89,8 @@ func _ready():
 	print("[G] 加载 spawn_manager")
 	spawn_manager = load("res://System/SpawnManager/SpawnManager.tscn").instance()
 	add_child(spawn_manager)
+	
+	
 	
 	print("[G] 初始化完成")
 

@@ -367,6 +367,10 @@ func move_to(_target_grid):
 func teleport_to(_target_grid):
 	if(grid):
 		on_leave_grid()
+	if(!_target_grid):
+		printerr("[BattleEntity] grid not found")
+	if(_target_grid.battle_entity!=null or _target_grid.building!=null ):
+		printerr("[BattleEntity] grid stacked")
 	on_enter_grid(_target_grid)
 	print("传送到网格 位置%s"%_target_grid.position)
 	position = _target_grid.position

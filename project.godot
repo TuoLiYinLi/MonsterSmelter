@@ -95,9 +95,9 @@ G="*res://System/Global/G.gd"
 
 [display]
 
-window/size/width=1600
-window/size/height=900
 window/size/resizable=false
+window/size/test_width=1100
+window/size/test_height=640
 
 [logging]
 

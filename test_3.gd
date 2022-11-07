@@ -24,7 +24,7 @@ func _ready():
 	
 	var m1 = G.battle_entity.instance()
 	add_child(m1)
-	m1.teleport_to(gm.get_grid_at(9,8))
+	m1.teleport_to(gm.get_grid_at(5,8))
 	m1.description = "p1"
 	
 	var w1 = G.weapon.instance()
@@ -48,4 +48,6 @@ func _ready():
 	for i in range(10):
 		for j in range(10):
 			G.spawn_manager.spawn_ground_dirt(i,j,randi()%8)
-			
+	
+	
+	G.spawn_manager.spawn_projectile_little_slime_ball(1,1,Projectile.DIRECTION.RIGHT)

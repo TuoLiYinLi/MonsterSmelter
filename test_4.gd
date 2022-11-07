@@ -33,25 +33,22 @@ func _ready():
 		grid.building = b
 		b.grid = grid
 	
-	var m1 = G.battle_entity.instance()
-	add_child(m1)
-	m1.teleport_to(gm.get_grid_at(1,2))
-	m1.description = "p1"
+	var g1:Gene = G.gene.instance()
+	var array = [g1]
+	G.spawn_manager.spawn_battle_entity_slime(8,8,array)	
 	
-	var w1 = G.weapon.instance()
-	m1.get_node("weapon_pivot").add_child(w1)
-	
-	var m2 = G.battle_entity.instance()
-	add_child(m2)
-	m2.teleport_to(gm.get_grid_at(7,2))
-	m2.description = "p2"
-	
-	var w2 = G.weapon.instance()
-	m2.get_node("weapon_pivot").add_child(w2)
+	var g2:Gene = G.gene_ignite.instance()
+	var array1 = [g2]
+	G.spawn_manager.spawn_battle_entity_slime(1,6,array1)	
 	
 	
-	m1.attack_target = m2
-	m2.attack_target = m1
+	
+	G.spawn_manager.spawn_projectile_little_slime_ball(1,1,Projectile.DIRECTION.RIGHT)
+
+	
+	
+	
+	
 	
 #	#目标点列表
 #	var target_position_list = [[2,6],[3,8],[8,8]]

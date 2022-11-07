@@ -26,13 +26,13 @@ func behavior():
 		#if(G.grid_manager.distance(get_host().grid, get_target().grid) <= 2):
 		#方向位置检测函数（攻击距离，主人的位置）Z
 		var direction = G.grid_manager.finder_enemy(4,get_host().grid)
-		if(direction):
-			if(get_host().attack_cd<=0):
+		if(direction!=-1):
+			if(get_host().attack_cd<=0 and !get_host().is_moving):
 				print("[Weapon] 进入攻击范围，发动战斗")
 				#生成子弹 Z
 				print("[Weapon] 发射子弹")
-				G.spawn_manager.spawn_projectile_little_slime_ball(get_host(),direction)
-				
+				G.spawn_manager.spawn_projectile_little_slime_ball(get_host().grid.index_x,get_host().grid.index_y,direction,get_host())
+				get_host().attack_cd += 1
 		# 在范围外则进行寻路靠近目标
 		else:
 			#使用权值地图计算 Z
