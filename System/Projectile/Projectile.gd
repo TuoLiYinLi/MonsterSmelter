@@ -34,6 +34,16 @@ func set_host(hs:BattleEntity,direction:int):
 	self.through = 0
 	self.collision_destory = 0
 	self.life_time = 2
+	#设置旋转角度Z
+	match self.direction:
+		1:
+			self.rotation_degrees = -90.0
+		2:
+			self.rotation_degrees = 90.0
+		3:
+			self.rotation_degrees = 180.0
+		4:
+			self.rotation_degrees = 0.0
 
 #up 1 down 2 left 3 right 4
 func _physics_process(delta):

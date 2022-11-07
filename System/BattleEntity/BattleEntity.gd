@@ -3,8 +3,6 @@ class_name BattleEntity
 extends Node2D
 
 
-func _ready():
-	$TextEdit.text = self.description
 
 # 此实体的信息文字说明
 var description:String = "default_battle_entity_info"

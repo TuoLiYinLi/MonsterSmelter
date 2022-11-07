@@ -29,8 +29,13 @@ func spawn_building_dirt_wall(grid_x:int, grid_y:int , version:int = 0):
 	G.building_pivot.add_child(obj)
 
 # 生成 投射物 小粘液球
-func spawn_projectile_little_slime_ball(grid_x:int,grid_y:int,direction:int):
-	pass
+func spawn_projectile_little_slime_ball(host:BattleEntity,direction:int):
+	var bullet = G.projectile.instance()
+	bullet.set_host(host,direction)
+	host.get_parent().add_child(bullet)
+	bullet.global_position = host.position
+	host.attack_cd += 1
+				
 
 var ground_dirt:PackedScene = load("res://System/Ground/Ground.tscn")
 

@@ -146,7 +146,9 @@ func get_A_route(map,start_x,start_y,final_x,final_y)->Array:
 		final_x = start[0]
 		final_y = start[1]
 		for i in range(4):
-			if map[final_x + xx[i]][final_y + yy[i]] < mins:
+			if final_x + xx[i]>=10 or final_x + xx[i]<0 or final_y + yy[i]>=10 or final_y + yy[i]<0:
+				continue
+			elif map[final_x + xx[i]][final_y + yy[i]] < mins:
 				next_x = final_x + xx[i]
 				next_y = final_y + yy[i]
 				mins = map[final_x + xx[i]][final_y + yy[i]]
@@ -187,6 +189,5 @@ func next_step_multi_A(navigation_matrix,start_x,start_y, target_position_list:A
 
 		
 		
-		
-		
-		 
+
+

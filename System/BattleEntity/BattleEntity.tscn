@@ -50,9 +50,3 @@ frame = 3
 playing = true
 
 [node name="weapon_pivot" type="Node2D" parent="."]
-
-[node name="TextEdit" type="TextEdit" parent="."]
-margin_left = -16.0
-margin_top = 24.0
-margin_right = 32.0
-margin_bottom = 48.0

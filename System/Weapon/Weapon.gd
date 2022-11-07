@@ -29,15 +29,10 @@ func behavior():
 		if(direction):
 			if(get_host().attack_cd<=0):
 				print("[Weapon] 进入攻击范围，发动战斗")
-#				get_host().offence(get_target())
 				#生成子弹 Z
 				print("[Weapon] 发射子弹")
-				var bullet = G.projectile.instance()
-				bullet.set_host(get_host(),direction)
-				get_host().get_parent().add_child(bullet)
-				bullet.global_position = global_position
+				G.spawn_manager.spawn_projectile_little_slime_ball(get_host(),direction)
 				
-				get_host().attack_cd += 1
 		# 在范围外则进行寻路靠近目标
 		else:
 			#使用权值地图计算 Z

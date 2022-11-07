@@ -109,6 +109,7 @@ func finder_enemy(distance:int,grid)->int:
 	#导出普通地图
 	var mt = to_navigate_matrix(G,"simple_navigate_matrix")
 	
+	
 	#检测x轴上是否有怪物
 	for i in range(grid.index_x-distance,grid.index_x+distance+1):
 		if i<0 or i>=len(mt[0]) or i == grid.index_x:

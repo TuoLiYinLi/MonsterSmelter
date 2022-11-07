@@ -24,8 +24,8 @@ var path_finder:PathFinder
 
 var spawn_manager:SpawnManager
 
-
 var battle_entity_pivot:Node2D
+
 var projectile_pivot:Node2D
 
 # 所有的building对象节点都放在这个节点下
@@ -60,10 +60,12 @@ func _ready():
 	print("[G] 准备初始化")
 	print("[G] 加载 ground_pivot")
 	ground_pivot = Node2D.new()
+	ground_pivot.name="ground_pivot"
 	add_child(ground_pivot)
 	
 	print("[G] 加载 building_pivot")
 	building_pivot = Node2D.new()
+	building_pivot.name="building_pivot"
 	add_child(building_pivot)
 	
 	print("[G] 加载 grid_manager")
@@ -79,6 +81,7 @@ func _ready():
 	add_child(spawn_manager)
 	
 	print("[G] 初始化完成")
+
 
 # ----------------------------------------------------------------------
 # 导出寻路网格
@@ -96,3 +99,6 @@ func simple_navigate_weight_matrix(_grid)->float:
 	if(_grid.building != null):
 		return 99999.0
 	return 1.0
+		
+		
+		 
