@@ -89,18 +89,19 @@ func spawn_projectile_little_slime_ball(grid_x:int,grid_y:int, direction:int, ho
 	G.projectile_pivot.add_child(bullet)
 	bullet.position = G.grid_manager.get_grid_at(grid_x,grid_y).position
 	bullet.host = host
+	bullet.life_time = 1
 	match direction:
 		G.DIRECTION.UP:
-			bullet.velocity.y = -320
+			bullet.velocity.y = -64*3.5
 			bullet.rotation_degrees = 270
 		G.DIRECTION.DOWN:
-			bullet.velocity.y = +320
+			bullet.velocity.y = +64*3.5
 			bullet.rotation_degrees = 90
 		G.DIRECTION.LEFT:
-			bullet.velocity.x = -320
+			bullet.velocity.x = -64*3.5
 			bullet.rotation_degrees = 180
 		G.DIRECTION.RIGHT:
-			bullet.velocity.x = +320
+			bullet.velocity.x = +64*3.5
 	
 
 # ---------------------------------------------------------------------------------
