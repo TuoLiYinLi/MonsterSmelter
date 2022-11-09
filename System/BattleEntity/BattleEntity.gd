@@ -1,8 +1,7 @@
 # BattleEntity.gd 战斗实体基本类型
+
 class_name BattleEntity
 extends Node2D
-
-
 
 # 此实体的信息文字说明
 var description:String = "default_battle_entity_info"
@@ -152,7 +151,7 @@ func set_energy_current(f):
 	else:
 		energy_current = self.energy_max
 		
-#能量恢复（Z）
+# 能量恢复（Z）
 var energy_recover:float = 10 setget set_energy_recover,get_energy_recover
 
 func get_energy_recover()->float:
@@ -164,7 +163,7 @@ func get_energy_recover()->float:
 func set_energy_recover(f:float)->void:
 	energy_recover=f
 
-#反伤率（Z）
+# 反伤率（Z）
 var rebound_rate:float = 0.2 setget set_rebound_rate,get_rebound_rate
 
 func get_rebound_rate()->float:
@@ -210,7 +209,7 @@ func _physics_process(delta:float):
 		self.energy_current += self.energy_recover * delta
 	
 	# 武器产生作用
-	if(self.weapon):
+	if(self.weapon and !is_moving):
 		self.weapon.behavior()
 	
 	# 攻击冷却
@@ -259,23 +258,22 @@ func offence(be:BattleEntity):
 			is_blocked = 0
 	
 	#是否暴击成功(初始默认暴击倍数为1)Z
-	var crit=1
-	if(randf()<=self.crit_rate):
-		crit=self.crit_multiple
+	var crit = 1
+	if(randf() <= self.crit_rate):
+		crit = self.crit_multiple
 		print("%s 对 %s 造成暴击" % [self.description, be.description])
 		
 	# 造成的真实伤害
 	var damage:float = max(self.attack*crit - is_blocked * be.armor, 0)
 	be.health_current -= damage
-	
-	var n = G.damage_num.instance()
-	get_node("/root/G").add_child(n)
-	n.position = be.global_position
-	n.text = damage
+	if crit > 1:
+		G.spawn_manager.spawn_effect_damage_num(be.grid.index_x,be.grid.index_y,damage,Color.orangered)
+	else:
+		G.spawn_manager.spawn_effect_damage_num(be.grid.index_x,be.grid.index_y,damage)
 	
 	# 触发
 	on_attack(be)
-	be.on_hit_by(self)
+	be.on_attacked_by(self)
 	
 #	print("%s的实际护甲率是%s"%[be.description,real_armor_rate])
 	
@@ -285,10 +283,10 @@ func offence(be:BattleEntity):
 		print("%s的护甲挡住了%s伤害，受到%s伤害，剩下生命值%s" % [be.description, be.armor, damage, be.health_current])
 		
 		
-	#是否触发反伤Z
+	# 是否触发反伤Z
 	var rebound_damage = 0
 	if(randf() <= be.rebound_rate):
-		rebound_damage = damage*be.rebound_proportion
+		rebound_damage = damage * be.rebound_proportion
 		self.health_current -= rebound_damage
 		print("%s的攻击触发了%s的反伤，造成了%s伤害，%s剩余%s生命" % [self.description, be.description, rebound_damage, self.description, self.health_current])
 	
@@ -310,9 +308,9 @@ func on_attack(enemy:BattleEntity):
 		g.on_attack(enemy)
 
 # 被敌人击中时 enemy是击中自己的敌人
-func on_hit_by(enemy:BattleEntity):
+func on_attacked_by(enemy:BattleEntity):
 	for g in $gene_pivot.get_children():
-		g.on_hit_by(enemy)
+		g.on_attacked_by(enemy)
 
 
 # ---------------------------------------------------------------------------
@@ -332,7 +330,7 @@ var last_position:Vector2 = Vector2.ZERO
 var is_moving:bool = false
 
 # 角色移动速度
-var moving_speed:float = 1 setget set_moving_speed,get_moving_speed
+var moving_speed:float = 1 setget set_moving_speed, get_moving_speed
 
 func get_moving_speed()->float:
 	var out:float = moving_speed
@@ -413,10 +411,10 @@ func get_weapon():
 
 #测试用：判断是否有多目标 测试多目标寻路用 Z
 #--------------------------------
-var test=1
+var test = 1
 var target_position_list:Array
 #--------------------------------
 
 #------------------------------------------------------
-func is_BattleEntity():
-	pass
+static func is_BattleEntity(obj)->bool:
+	return obj.has_method("is_BattleEntity")
