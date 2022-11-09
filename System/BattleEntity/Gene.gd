@@ -53,16 +53,20 @@ var description:String = "default_gene_info"
 func on_burning(_delta:float):
 	pass
 
+# 当正在中毒时，每帧触发 delta是间隔时间
+func on_poisoning(_delta:float):
+	pass
+
 # 当死亡时，单帧触发
 func on_dead():
 	pass
 
 # 当击中敌人时 enemy是击中的敌人
 func on_attack(_enemy):
-	print("击中敌人时恢复1生命值触发了")
-	get_parent().get_parent().health_current += 1
+	pass
 
-func on_hit_by(_enemy):
+# 被敌人击中时 enemy是击中自己的敌人
+func on_attacked_by(_enemy):
 	pass
 
 
@@ -70,3 +74,7 @@ func on_hit_by(_enemy):
 # 角色移动系统
 
 var moving_speed:float = 0
+
+# --------------------------------------------------------------------
+static func is_Gene(obj)->bool:
+	return obj.has_method("is_Gene")
