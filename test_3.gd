@@ -22,25 +22,9 @@ func _ready():
 	for i in range(4,8):
 		G.spawn_manager.spawn_building_dirt_wall(7,i,randi()%3)
 	
-	var m1 = G.battle_entity.instance()
-	add_child(m1)
-	m1.teleport_to(gm.get_grid_at(5,8))
-	m1.description = "p1"
 	
-	var w1 = G.weapon.instance()
-	m1.get_node("weapon_pivot").add_child(w1)
-	
-	var m2 = G.battle_entity.instance()
-	add_child(m2)
-	m2.teleport_to(gm.get_grid_at(1,6))
-	m2.description = "p2"
-	
-	
-#	m2.moving_cd = 0.5
-	
-	var w2 = G.weapon.instance()
-	m2.get_node("weapon_pivot").add_child(w2)
-	
+	var m1 = G.spawn_manager.spawn_battle_entity_slime(2,7)
+	var m2 = G.spawn_manager.spawn_battle_entity_slime(4,8)
 	
 	m1.attack_target = m2
 	m2.attack_target = m1
@@ -50,4 +34,5 @@ func _ready():
 			G.spawn_manager.spawn_ground_dirt(i,j,randi()%8)
 	
 	
-	G.spawn_manager.spawn_projectile_little_slime_ball(1,1,Projectile.DIRECTION.RIGHT)
+	G.spawn_manager.spawn_projectile_little_slime_ball(1,1,G.DIRECTION.RIGHT)
+
