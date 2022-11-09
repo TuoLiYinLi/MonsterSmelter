@@ -18,42 +18,25 @@ enum DIRECTION{
 
 # 网格管理器单例
 var grid_manager:GridManager
-
-#寻路 Z
+# 寻路 Z
 var path_finder:PathFinder
-
+# 生成管理器
 var spawn_manager:SpawnManager
 
+# 所有的战斗实体放在这里
 var battle_entity_pivot:Node2D
-
+# 所有的投射物节点放在这里
 var projectile_pivot:Node2D
-
 # 所有的building对象节点都放在这个节点下
 var building_pivot:Node2D
-
 # 所有的ground对象节点都放在这个节点下
 var ground_pivot:Node2D
-
-# 预加载的战斗实体场景
-var battle_entity:PackedScene = load("res://System/BattleEntity/BattleEntity.tscn")
-
-# 预加载的基因场景
-var gene:PackedScene = load("res://System/BattleEntity/Gene.tscn")
-
-# 默认建筑
-var building:PackedScene = load("res://System/Building/Building.tscn")
+# effect放在这里
+var effect_pivot:Node2D
 
 # 默认武器
 var weapon:PackedScene = load("res://System/Weapon/Weapon.tscn")
 
-
-var damage_num = load("res://Effect/damage_num.tscn")
-
-# 点燃基因
-var gene_ignite:PackedScene = load("res://gene_ignite.tscn")
-
-#发射子弹
-var projectile:PackedScene = load("res://System/Projectile/Projectile.tscn")
 
 
 func _ready():
@@ -77,6 +60,12 @@ func _ready():
 	projectile_pivot = Node2D.new()
 	projectile_pivot.name='projectile_pivot'
 	add_child(projectile_pivot)
+	
+	print("[G] 加载  effect_pivot")
+	effect_pivot = Node2D.new()
+	effect_pivot.name='effect_pivot'
+	add_child(effect_pivot)
+	
 	
 	print("[G] 加载 grid_manager")
 	grid_manager = load("res://System/GridManager/GridManager.tscn").instance()
@@ -113,4 +102,18 @@ func simple_navigate_weight_matrix(_grid)->float:
 	return 1.0
 		
 		
-		 
+# 类型检测
+static func is_BattleEntity(obj)->bool:
+	return BattleEntity.is_BattleEntity(obj)
+
+static func is_Projectile(obj)->bool:
+	return Projectile.is_Projectile(obj)
+
+static func is_Building(obj)->bool:
+	return Building.is_Building(obj)
+	
+static func is_Ground(obj)->bool:
+	return Ground.is_Ground(obj)
+
+static func is_Gene(obj)->bool:
+	return Gene.is_Gene(obj)
