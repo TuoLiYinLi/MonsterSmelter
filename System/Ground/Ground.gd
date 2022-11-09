@@ -17,3 +17,8 @@ var version:int = 0 setget set_version
 
 func set_version(value:int):
 	$Sprite.frame = value
+
+
+#------------------------------------------------------
+static func is_Ground(obj)->bool:
+	return obj.has_method("is_Ground")
