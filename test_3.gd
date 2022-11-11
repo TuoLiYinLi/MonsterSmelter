@@ -23,8 +23,8 @@ func _ready():
 		G.spawn_manager.spawn_building_dirt_wall(7,i,randi()%3)
 	
 	
-	var m1 = G.spawn_manager.spawn_battle_entity_slime(2,7)
-	var m2 = G.spawn_manager.spawn_battle_entity_slime(4,8)
+	var m1 = G.spawn_manager.spawn_battle_entity_slime(2,5)
+	var m2 = G.spawn_manager.spawn_battle_entity_slime(7,2)
 	
 	m1.attack_target = m2
 	m2.attack_target = m1
@@ -34,5 +34,5 @@ func _ready():
 			G.spawn_manager.spawn_ground_dirt(i,j,randi()%8)
 	
 	
-	G.spawn_manager.spawn_projectile_little_slime_ball(1,1,G.DIRECTION.RIGHT)
+	G.spawn_manager.spawn_projectile_little_slime_ball(1,1,G.DIRECTION.DOWN)
 
