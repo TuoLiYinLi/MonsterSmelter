@@ -34,9 +34,6 @@ var ground_pivot:Node2D
 # effect放在这里
 var effect_pivot:Node2D
 
-# 默认武器
-var weapon:PackedScene = load("res://System/Weapon/Weapon.tscn")
-
 
 
 func _ready():
