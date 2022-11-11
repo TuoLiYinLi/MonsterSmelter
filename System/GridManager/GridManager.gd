@@ -35,9 +35,9 @@ func init_grids(_width:int, _height:int):
 # 获取某一位置的网格，index_x为横坐标，index_y为y坐标，返回值为Grid实例或null
 # x坐标向右为正，y向下为正方向
 func get_grid_at(index_x:int, index_y:int)->Grid:
-	if(index_x < get_child_count()):
+	if(index_x>=0 and index_x < get_child_count()):
 		var n = get_child(index_x)
-		if(index_y < n.get_child_count()):
+		if(index_y>=0 and index_y < n.get_child_count()):
 			return n.get_child(index_y)
 	printerr("[GridManager] 尝试获取(%s,%s)的网格不存在"% [index_x, index_y])
 	return null
