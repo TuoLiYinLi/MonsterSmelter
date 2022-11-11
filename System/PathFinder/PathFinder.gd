@@ -102,7 +102,7 @@ func next_step_A(navigation_matrix,start_x,start_y,end_x,end_y)->Array:
 	start_position=[start_x,start_y]
 	
 	#进入地图递归函数
-	A(navigation_matrix,start_x,start_y,end_x,end_y)
+	A(navigation_matrix,start_x,start_y)
 
 	#进入路径选择函数
 	var route = get_A_route(navigation_matrix,start_x,start_y,end_x,end_y)
@@ -115,9 +115,7 @@ func next_step_A(navigation_matrix,start_x,start_y,end_x,end_y)->Array:
 
 #地图处理递归函数 Z
 #（地图，初始x,初始y,结束x，结束y）无输出
-func A(map,x:int,y:int,m:int,n:int):
-	if x == m and y == n:
-		return
+func A(map,x:int,y:int):
 	for i in range(4):
 		var next_x = x + xx[i]
 		var next_y = y + yy[i]
@@ -126,10 +124,10 @@ func A(map,x:int,y:int,m:int,n:int):
 			continue
 		if map[next_x][next_y] == 1 or map[next_x][next_y] == 500 or map[next_x][next_y] == 99999:
 			map[next_x][next_y] = map[x][y] + map[next_x][next_y]
-			A(map,next_x, next_y, m, n)
+			A(map,next_x, next_y)
 		elif map[x][y] + map2[next_x][next_y] < map[next_x][next_y]:
 			map[next_x][next_y] = map[x][y] + map2[next_x][next_y]
-			A(map, next_x, next_y, m, n)
+			A(map, next_x, next_y)
 			
 
 #递归处理地图后寻找路径,返回路径列表 Z
@@ -167,12 +165,11 @@ func next_step_multi_A(navigation_matrix,start_x,start_y, target_position_list:A
 	#将初始坐标赋值为1防止进入函数卡死
 	navigation_matrix[start_x][start_y]=1
 	start_position=[start_x,start_y]
-	map2 = navigation_matrix	
-	
+	map2 = navigation_matrix.duplicate(true)	
+	A(navigation_matrix,start_x,start_y)	
 	for i in len(target_position_list):
+		var map3:Array = navigation_matrix.duplicate(true)
 		var sum = 0
-		var map3:Array = navigation_matrix.duplicate(true)		
-		A(map3,start_x,start_y,target_position_list[i][0],target_position_list[i][1])
 		var route = get_A_route(map3,start_x,start_y,target_position_list[i][0],target_position_list[i][1])
 		print(route)
 		#计算权值大小判断最短
