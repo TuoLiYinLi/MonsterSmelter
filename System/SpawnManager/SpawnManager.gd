@@ -16,12 +16,14 @@ enum BATTLE_ENTITY_ID{
 	GEM_FIGHTER, # 宝石战士 
 }
 
-# 战斗实体字典
+# 战斗实体资源字典
 var battle_entity_dict:Dictionary = {
 	BATTLE_ENTITY_ID.SLIME:load("res://BattleEntity/slime.tscn"),
+	
 }
 
-func spawn_battle_entity(grid_x:int, grid_y:int,BE_ID:int,WP_ID:int,genes:Array)->BattleEntity:
+# 通用生成战斗实体
+func spawn_battle_entity(BE_ID:int,grid_x:int, grid_y:int,WP_ID:int,genes:Array)->BattleEntity:
 	var g = G.grid_manager.get_grid_at(grid_x,grid_y)
 	if(g.building or g.battle_entity):
 		printerr("[SpawnManager] spawn_battle_entity在%s,%s处已阻挡" % [grid_x, grid_y])
@@ -39,7 +41,7 @@ func spawn_battle_entity(grid_x:int, grid_y:int,BE_ID:int,WP_ID:int,genes:Array)
 
 # 生成 战斗实体 史莱姆
 func spawn_battle_entity_slime(grid_x:int, grid_y:int)->BattleEntity:
-	return spawn_battle_entity(grid_x,grid_y,BATTLE_ENTITY_ID.SLIME,WEAPON_ID.SPIT,[])
+	return spawn_battle_entity(BATTLE_ENTITY_ID.SLIME,grid_x,grid_y,WEAPON_ID.SPIT,[])
 	
 # ----------------------------------------------------------------
 # 武器
@@ -56,26 +58,48 @@ var weapon_dict:Dictionary = {
 	
 }
 
+# 通用的生成武器
 func spawn_weapon(WP_ID:int)->Weapon:
 	return weapon_dict[WP_ID].instance()
 
 # ----------------------------------------------------------------------------
+# 基因
+enum GENE_ID{
+	IGNITE, # 点燃
+}
+
+
+
+# ----------------------------------------------------------------------------
 # 建筑
 
-var building_dirt_wall:PackedScene = load("res://Building/dirt_wall.tscn")
+# 所有建筑ID枚举
 
-# 生成 建筑 墙
-func spawn_building_dirt_wall(grid_x:int, grid_y:int , version:int = 0):
+enum BUILDING_ID{
+	DIRT_WALL, # 土墙
+	
+}
+# 建筑的资源字典
+var building_dict:Dictionary = {
+	BUILDING_ID.DIRT_WALL: load("res://Building/dirt_wall.tscn")
+}
+# 通用的生成建筑
+func spawn_building(BD_ID:int,grid_x:int, grid_y:int , version:int = 0)->Building:
 	var g = G.grid_manager.get_grid_at(grid_x, grid_y)
 	if(g.building or g.battle_entity):
-		printerr("[SpawnManager] spawn_building_dirt_wall在%s,%s处已阻挡" % [grid_x, grid_y])
-		return
-	var obj:Node2D = building_dirt_wall.instance()
+		printerr("[SpawnManager] spawn_building在%s,%s处已阻挡" % [grid_x, grid_y])
+		return null
+	var obj:Building = building_dict[BD_ID].instance()
 	G.building_pivot.add_child(obj)
 	obj.grid = g
 	g.building = obj
 	obj.position = g.position
 	obj.version = version
+	return obj
+
+# 生成 建筑 墙
+func spawn_building_dirt_wall(grid_x:int, grid_y:int , version:int = 0):
+	spawn_building(BUILDING_ID.DIRT_WALL, grid_x, grid_y, version)
 
 
 # ---------------------------------------------------------------------------------
@@ -106,18 +130,28 @@ func spawn_projectile_little_slime_ball(grid_x:int,grid_y:int, direction:int, ho
 
 # ---------------------------------------------------------------------------------
 # 地面
-
-var ground_dirt:PackedScene = load("res://System/Ground/Ground.tscn")
-
-# 生成 地面 泥土
-func spawn_ground_dirt(grid_x:int, grid_y:int , version:int = 0):
-	var obj:Node2D = ground_dirt.instance()
+# 地面种类枚举
+enum GROUND_ID{
+	DIRT,
+}
+# 地面的资源字典
+var ground_dict:Dictionary= {
+	GROUND_ID.DIRT: load("res://System/Ground/Ground.tscn"),
+	
+}
+# 通用的生成地面
+func spawn_ground(G_ID:int,grid_x:int, grid_y:int , version:int = 0):
+	var obj:Ground = ground_dict[G_ID].instance()
 	var g = G.grid_manager.get_grid_at(grid_x, grid_y)
 	obj.grid = g
 	g.ground = obj
 	obj.position = g.position
 	obj.version = version
 	G.ground_pivot.add_child(obj)
+
+# 生成 地面 泥土
+func spawn_ground_dirt(grid_x:int, grid_y:int , version:int = 0):
+	spawn_ground(GROUND_ID.DIRT, grid_x, grid_y, version)
 
 # ---------------------------------------------------------------------------------
 # 特效
