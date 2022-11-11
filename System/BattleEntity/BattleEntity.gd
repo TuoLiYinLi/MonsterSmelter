@@ -202,7 +202,7 @@ func _physics_process(delta:float):
 	if(health_current <= 0):
 		on_dead()
 		print("%s生命值归零死亡了" % description)
-		queue_free()
+		get_parent().remove_child(self)
 	else:
 		self.health_current += self.health_recovery * delta
 		#能量恢复（Z）
