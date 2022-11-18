@@ -123,5 +123,4 @@ func check_in_cross(grid_center:Grid, grid_target:Grid)->Array:
 			direction = G.DIRECTION.LEFT
 		else:
 			direction = G.DIRECTION.RIGHT
-	
 	return [in_cross, direction, d]

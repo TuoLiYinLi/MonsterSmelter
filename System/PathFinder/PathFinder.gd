@@ -109,7 +109,6 @@ func next_step_A(navigation_matrix,start_x,start_y,end_x,end_y)->Array:
 	
 #	for i in range(len(navigation_matrix[0])):
 #		print(navigation_matrix[i])
-	print(route)
 	return [route[0][0],route[0][1]]
 	
 
@@ -166,21 +165,25 @@ func next_step_multi_A(navigation_matrix,start_x,start_y, target_position_list:A
 	navigation_matrix[start_x][start_y]=1
 	start_position=[start_x,start_y]
 	map2 = navigation_matrix.duplicate(true)	
-	A(navigation_matrix,start_x,start_y)	
+	A(navigation_matrix,start_x,start_y)
+	for i in range(len(navigation_matrix[0])):
+		print(navigation_matrix[i])
+	
 	for i in len(target_position_list):
 		var map3:Array = navigation_matrix.duplicate(true)
 		var sum = 0
+		
 		var route = get_A_route(map3,start_x,start_y,target_position_list[i][0],target_position_list[i][1])
 		print(route)
 		#计算权值大小判断最短
 		for j in len(route):
 			sum = sum + map3[route[j][0]][route[j][1]]
-		print(sum)
 		if sum<min1:
 			min1 = sum
 			path = route
 	if(!path):
 		return []
+	print("path",path)
 	return [path[len(path)-1][0],path[len(path)-1][1]]
 
 		

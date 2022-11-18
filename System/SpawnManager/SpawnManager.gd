@@ -39,6 +39,7 @@ func spawn_battle_entity(BE_ID:int,grid_x:int, grid_y:int,WP_ID:int,genes:Array)
 	G.battle_entity_pivot.add_child(be)
 	return be
 
+
 # 生成 战斗实体 史莱姆
 func spawn_battle_entity_slime(grid_x:int, grid_y:int)->BattleEntity:
 	return spawn_battle_entity(BATTLE_ENTITY_ID.SLIME,grid_x,grid_y,WEAPON_ID.SPIT,[])
@@ -49,13 +50,21 @@ func spawn_battle_entity_slime(grid_x:int, grid_y:int)->BattleEntity:
 # 所有武器ID枚举
 enum WEAPON_ID{
 	SPIT, # 喷射（粘液球）
-	
+	SWORD, # 剑（砍）
+	GREAD_SWORD, # 大剑（大横扫）
+	JAVELINE, # 标枪
+	FLAMETHROWER, #火焰喷射
+	BOW, # 弓
 }
 
 # 所有武器字典
 var weapon_dict:Dictionary = {
 	WEAPON_ID.SPIT: load("res://Weapon/spit.tscn"),
-	
+	WEAPON_ID.SWORD: load("res://Weapon/sword.tscn"),
+	WEAPON_ID.GREAD_SWORD: load("res://Weapon/great_sword.tscn"),
+	WEAPON_ID.JAVELINE: load("res://Weapon/throw_javelin.tscn"),
+	WEAPON_ID.FLAMETHROWER: load("res://Weapon/flamethrower.tscn"),
+	WEAPON_ID.BOW: load("res://Weapon/bow.tscn")
 }
 
 # 通用的生成武器
@@ -106,6 +115,11 @@ func spawn_building_dirt_wall(grid_x:int, grid_y:int , version:int = 0):
 # 投射物
 
 var projectile_little_slime_ball:PackedScene = load("res://Projectile/little_slime_ball.tscn")
+var projectile_chop_attack:PackedScene = load("res://Projectile/chop.tscn")
+var projectile_javeline:PackedScene = load("res://Projectile/javeline.tscn")
+var projectile_flame:PackedScene = load("res://Projectile/flame.tscn")
+var projectile_arrow:PackedScene = load("res://Projectile/arrow.tscn")
+
 
 # 生成 投射物 小粘液球
 func spawn_projectile_little_slime_ball(grid_x:int,grid_y:int, direction:int, host:BattleEntity = null):
@@ -128,6 +142,132 @@ func spawn_projectile_little_slime_ball(grid_x:int,grid_y:int, direction:int, ho
 			bullet.velocity.x = +64*3.5
 	
 
+# 生成 攻击 向前砍
+func spawn_projectile_chop_attack(grid_x:int,grid_y:int, direction:int, host:BattleEntity = null):
+	var bullet:Projectile = projectile_chop_attack.instance()
+	G.projectile_pivot.add_child(bullet)
+	bullet.position = G.grid_manager.get_grid_at(grid_x,grid_y).position
+	bullet.host = host
+	bullet.life_time = 2
+	match direction:
+		G.DIRECTION.UP:
+			bullet.velocity.y = -64
+			bullet.rotation_degrees = 270
+		G.DIRECTION.DOWN:
+			bullet.velocity.y = +64
+			bullet.rotation_degrees = 90
+		G.DIRECTION.LEFT:
+			bullet.velocity.x = -64
+			bullet.rotation_degrees = 180
+		G.DIRECTION.RIGHT:
+			bullet.velocity.x = +64
+
+# 生成 攻击 大范围像前砍
+func spawn_projectile_gread_chop_attack(grid_x:int,grid_y:int, direction:int, host:BattleEntity = null):
+	var bullet_a:Projectile = projectile_chop_attack.instance()
+	var bullet_b:Projectile = projectile_chop_attack.instance()
+	var bullet_c:Projectile = projectile_chop_attack.instance()
+	G.projectile_pivot.add_child(bullet_a)
+	G.projectile_pivot.add_child(bullet_b)
+	G.projectile_pivot.add_child(bullet_c)
+	bullet_a.position = G.grid_manager.get_grid_at(grid_x,grid_y).position
+	bullet_b.position = G.grid_manager.get_grid_at(grid_x,grid_y).position
+	bullet_c.position = G.grid_manager.get_grid_at(grid_x,grid_y).position
+	bullet_a.host = host
+	bullet_a.life_time = 2
+	bullet_b.host = host
+	bullet_b.life_time = 2
+	bullet_c.host = host
+	bullet_c.life_time = 2
+	match direction:
+		G.DIRECTION.UP:
+			bullet_a.velocity.y = -64
+			bullet_a.rotation_degrees = 270
+			bullet_b.velocity.y = -64
+			bullet_b.rotation_degrees = 180
+			bullet_c.velocity.y = +64
+		G.DIRECTION.DOWN:
+			bullet_a.velocity.y = +64
+			bullet_a.rotation_degrees = 90
+			bullet_b.velocity.y = -64
+			bullet_b.rotation_degrees = 180
+			bullet_c.velocity.y = +64
+		G.DIRECTION.LEFT:
+			bullet_a.velocity.x = -64
+			bullet_a.rotation_degrees = 180
+			bullet_b.velocity.y = -64
+			bullet_b.rotation_degrees = 270		
+			bullet_c.velocity.y = +64
+			bullet_c.rotation_degrees = 90
+		G.DIRECTION.RIGHT:
+			bullet_a.velocity.x = +64
+			bullet_b.velocity.y = -64
+			bullet_b.rotation_degrees = 270		
+			bullet_c.velocity.y = +64
+			bullet_c.rotation_degrees = 90
+			
+			
+			
+# 生成 投射物 标枪
+func spawn_projectile_javeline(grid_x:int,grid_y:int, direction:int, host:BattleEntity = null):
+	var bullet:Projectile = projectile_javeline.instance()
+	G.projectile_pivot.add_child(bullet)
+	bullet.position = G.grid_manager.get_grid_at(grid_x,grid_y).position
+	bullet.host = host
+	bullet.life_time = 1
+	match direction:
+		G.DIRECTION.UP:
+			bullet.velocity.y = -64*3.5
+			bullet.rotation_degrees = 270
+		G.DIRECTION.DOWN:
+			bullet.velocity.y = +64*3.5
+			bullet.rotation_degrees = 90
+		G.DIRECTION.LEFT:
+			bullet.velocity.x = -64*3.5
+			bullet.rotation_degrees = 180
+		G.DIRECTION.RIGHT:
+			bullet.velocity.x = +64*3.5
+			
+			
+#生成 投射物 火焰
+func spawn_projectile_flame(grid_x:int,grid_y:int, direction:int, host:BattleEntity = null):
+	var bullet:Projectile = projectile_flame.instance()
+	G.projectile_pivot.add_child(bullet)
+	bullet.position = G.grid_manager.get_grid_at(grid_x,grid_y).position
+	bullet.host = host
+	match direction:
+		G.DIRECTION.UP:
+			bullet.velocity.y = -64
+			bullet.rotation_degrees = 270
+		G.DIRECTION.DOWN:
+			bullet.velocity.y = +64
+			bullet.rotation_degrees = 90
+		G.DIRECTION.LEFT:
+			bullet.velocity.x = -64
+			bullet.rotation_degrees = 180
+		G.DIRECTION.RIGHT:
+			bullet.velocity.x = +64
+			
+
+#生成 投射物 箭
+func spawn_projectile_arrow(grid_x:int,grid_y:int, d:int, direction:int, host:BattleEntity = null):
+	var bullet:Projectile = projectile_arrow.instance()
+	G.projectile_pivot.add_child(bullet)
+	bullet.position = G.grid_manager.get_grid_at(grid_x,grid_y).position
+	bullet.host = host
+	bullet.p = d
+	match direction:
+		G.DIRECTION.UP:
+			bullet.velocity.y = -64
+			bullet.rotation_degrees = 270
+		G.DIRECTION.DOWN:
+			bullet.velocity.y = +64
+			bullet.rotation_degrees = 90
+		G.DIRECTION.LEFT:
+			bullet.velocity.x = -64
+			bullet.rotation_degrees = 180
+		G.DIRECTION.RIGHT:
+			bullet.velocity.x = +64
 # ---------------------------------------------------------------------------------
 # 地面
 # 地面种类枚举
