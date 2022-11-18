@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Texture/Projectile/projectile_javelin.png" type="Texture" id=1]
+[ext_resource path="res://Projectile/javeline.gd" type="Script" id=2]
+[ext_resource path="res://Projectile/little_slime_ball.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 20, 5 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="javeline" instance=ExtResource( 3 )]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2( -3.99996, 5 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" parent="." index="1"]
+position = Vector2( -7.62939e-06, 0 )
+scale = Vector2( 0.170667, 0.374269 )
+frames = SubResource( 2 )
+frame = 0
