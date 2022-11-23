@@ -1,4 +1,4 @@
-# flamethrower.gd
+# flame_thrower.gd
 extends Weapon
 
 # 武器开始发挥作用
@@ -19,19 +19,18 @@ func behavior():
 			#使用权值地图计算 Z
 			if(get_host().moving_cd <= 0):
 				var mt = G.grid_manager.to_navigate_matrix(G,"simple_navigate_weight_matrix")
+			
 				
-				var g_list:Array = []
-				
-				for x in range(get_host().grid.index_x-3,get_host().grid.index_x+3):
-					for y in range(get_host().grid.index_y-3,get_host().grid.index_y+3):
-						if(x==get_host().grid.index_x or y==get_host().grid.index_y):
-							var g = G.grid_manager.get_grid_at(x,y)
-							if g and g!= get_host().grid:
-								g_list.append([x,y])
-				
-				print(g_list)
-				
-				var ns = G.path_finder.next_step_multi_A(mt, get_host().grid.index_x, get_host().grid.index_y, g_list)
+#				var g_list:Array = []
+#				for x in range(get_host().grid.index_x-3,get_host().grid.index_x+3):
+#					for y in range(get_host().grid.index_y-3,get_host().grid.index_y+3):
+#						if(x==get_host().grid.index_x or y==get_host().grid.index_y):
+#							var g = G.grid_manager.get_grid_at(x,y)
+#							if g and g!= get_host().grid:
+#								g_list.append([x,y])
+#				print("g_list",g_list)
+#				var ns = G.path_finder.next_step_multi_A(mt, get_host().grid.index_x, get_host().grid.index_y, g_list)
+				var ns = G.path_finder.next_step_A(mt,get_host().grid.index_x, get_host().grid.index_y,get_target().grid.index_x, get_target().grid.index_y)
 				if(ns):
 					get_host().move_to(G.grid_manager.get_grid_at(ns[0], ns[1]))
 					print("[Weapon] 角色导航中 %s %s"%[ns[0],ns[1]])

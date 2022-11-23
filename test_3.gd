@@ -25,14 +25,16 @@ func _ready():
 	
 	var m1 = G.spawn_manager.spawn_battle_entity_slime(2,5)
 	var m2 = G.spawn_manager.spawn_battle_entity_slime(7,2)
+	var m3 = G.spawn_manager.spawn_battle_entity_slime(8,8)
 	
 	m1.attack_target = m2
 	m2.attack_target = m1
+	m3.attack_target = m2
 	
 	for i in range(10):
 		for j in range(10):
 			G.spawn_manager.spawn_ground_dirt(i,j,randi()%8)
 	
 	
-	G.spawn_manager.spawn_projectile_little_slime_ball(1,1,G.DIRECTION.DOWN)
-
+	#G.spawn_manager.spawn_projectile_little_slime_ball(1,1,G.DIRECTION.DOWN)
+	G.spawn_manager.spawn_projectile_chop_attack(1,1,G.DIRECTION.DOWN)

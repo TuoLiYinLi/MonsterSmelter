@@ -192,6 +192,10 @@ var burning_cd:float = 0
 
 func _physics_process(delta:float):
 	
+	# 武器产生作用
+	if(self.weapon and !is_moving):
+		self.weapon.behavior()
+	
 	# 燃烧效果
 	if(burning_cd > 0):
 		health_current -= G.BURNING_RATE * self.health_max * delta
@@ -202,15 +206,14 @@ func _physics_process(delta:float):
 	if(health_current <= 0):
 		on_dead()
 		print("%s生命值归零死亡了" % description)
-		get_parent().remove_child(self)
+#		get_parent().remove_child(self)
+		queue_free()
+#		on_leave_grid()
 	else:
 		self.health_current += self.health_recovery * delta
 		#能量恢复（Z）
 		self.energy_current += self.energy_recover * delta
 	
-	# 武器产生作用
-	if(self.weapon and !is_moving):
-		self.weapon.behavior()
 	
 	# 攻击冷却
 	if(attack_cd > 0):
@@ -357,6 +360,9 @@ func move_to(_target_grid):
 			moving_cd += 1
 			target_grid = _target_grid
 			next_position = _target_grid.position
+			
+			$sprite/AnimatedSprite.flip_h = _target_grid.index_x < grid.index_x
+			
 		# 移动时外部环境的约束
 		else:
 			printerr("[BattleEntity] 网格阻挡，取消移动")
@@ -380,7 +386,7 @@ func on_leave_grid():
 	if(grid):
 		print("离开网格 %s" % grid.position)
 		grid.battle_entity = null
-		grid = null
+		self.grid = null
 	else:
 		printerr("离开网格时，网格不存在")
 

@@ -1,17 +1,17 @@
-# sword.gd
+# bow.gd
 extends Weapon
 
 # 武器开始发挥作用
 func behavior():
 	# 如果当前角色有攻击目标
-	if(get_target()):
+	if(get_target() and is_instance_valid(get_target())):
 		# 在攻击范围内则进行攻击
 		var res:Array = G.grid_manager.check_in_cross(get_host().grid,get_target().grid)
-		if(res[0] and res[2] <= 1):
+		if(res[0] and res[2] <= 5):
 			if(get_host().attack_cd <= 0):
-		
-				print("[Weapon] 发动斩击")
-				G.spawn_manager.spawn_projectile_chop_attack(get_host().grid.index_x,get_host().grid.index_y,res[1],get_host())
+				print("[Weapon] 发射箭")
+				var target_grid = get_target().grid
+				G.spawn_manager.spawn_projectile_arrow(get_host().grid.index_x,get_host().grid.index_y,target_grid.index_x,target_grid.index_y,get_host())
 				get_host().attack_cd += 1
 			
 		# 在范围外则进行寻路靠近目标
@@ -30,6 +30,7 @@ func behavior():
 #				print("g_list",g_list)
 #				var ns = G.path_finder.next_step_multi_A(mt, get_host().grid.index_x, get_host().grid.index_y, g_list)
 				var ns = G.path_finder.next_step_A(mt,get_host().grid.index_x, get_host().grid.index_y,get_target().grid.index_x, get_target().grid.index_y)
+				
 				if(ns):
 					get_host().move_to(G.grid_manager.get_grid_at(ns[0], ns[1]))
 					print("[Weapon] 角色导航中 %s %s"%[ns[0],ns[1]])

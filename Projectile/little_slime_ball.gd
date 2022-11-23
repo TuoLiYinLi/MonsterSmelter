@@ -17,7 +17,10 @@ func _ready():
 func on_hit_battle_entity(_battle_entity):
 	if(host and _battle_entity != host):
 		host.offence(_battle_entity)
-		get_parent().remove_child(self)
+#		get_parent().remove_child(self)
+		flag_valid = false
+		life_time = 0
+		queue_free()
 
 # 当击中建筑时触发
 func on_hit_building(_building):

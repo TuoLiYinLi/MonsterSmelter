@@ -81,7 +81,7 @@ _global_script_class_icons={
 [application]
 
 config/name="MonsterSmelter"
-run/main_scene="res://test_3.tscn"
+run/main_scene="res://test_4.tscn"
 
 [autoload]
 

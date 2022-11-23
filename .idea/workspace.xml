@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cf40d21a-b900-46df-a274-871e3d6e370e" name="默认更改列表" comment="" />
+    <list default="true" id="cf40d21a-b900-46df-a274-871e3d6e370e" name="默认更改列表" comment="">
+      <change beforePath="$PROJECT_DIR$/Projectile/chop.gd" beforeDir="false" afterPath="$PROJECT_DIR$/Projectile/chop.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/System/BattleEntity/BattleEntity.gd" beforeDir="false" afterPath="$PROJECT_DIR$/System/BattleEntity/BattleEntity.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/System/BattleEntity/BattleEntity.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/System/BattleEntity/BattleEntity.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/System/Projectile/Projectile.gd" beforeDir="false" afterPath="$PROJECT_DIR$/System/Projectile/Projectile.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/System/SpawnManager/SpawnManager.gd" beforeDir="false" afterPath="$PROJECT_DIR$/System/SpawnManager/SpawnManager.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weapon/spit.gd" beforeDir="false" afterPath="$PROJECT_DIR$/Weapon/spit.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weapon/spit.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/Weapon/spit.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/project.godot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_3.gd" beforeDir="false" afterPath="$PROJECT_DIR$/test_3.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_4.gd" beforeDir="false" afterPath="$PROJECT_DIR$/test_4.gd" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,6 +34,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="H:/servie/ssm_exame" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.runner" />
   </component>
   <component name="SvnConfiguration">
@@ -36,7 +48,17 @@
       <option name="presentableId" value="Default" />
       <updated>1667025454595</updated>
       <workItem from="1667025458519" duration="1000" />
+      <workItem from="1668936207122" duration="464000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1668936673188">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1668936673188" />
   </component>
 </project>

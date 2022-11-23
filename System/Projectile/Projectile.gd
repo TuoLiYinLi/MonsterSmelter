@@ -7,6 +7,9 @@ class_name Projectile
 # 自己的主人
 var host:BattleEntity = null
 
+# 可用性标签
+var flag_valid:bool = true
+
 # 初始速度
 var velocity:Vector2 = Vector2.ZERO
 
@@ -32,6 +35,10 @@ func _physics_process(delta:float):
 # 信号接入
 # 当击中战斗实体(BattleEntity)或建筑(Building)时会触发
 func on_enter_area(area:Area2D):
+#	print("[Projectile] on_enter_area")
+	if(!host or !is_instance_valid(host) or !flag_valid):
+		return
+	
 	# 获取目标的父节点
 	var _target = area.get_parent()
 	if(!_target):

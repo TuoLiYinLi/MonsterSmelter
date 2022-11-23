@@ -8,46 +8,34 @@ func _ready():
 	
 	gm.init_grids(10,10)
 	
-	for grid in gm.get_grids_range(3,3,3,8):
-		var b = G.building.instance()
-		add_child(b)
-		grid.building = b
-		b.grid = grid
+	for i in range(3,9):
+		G.spawn_manager.spawn_building_dirt_wall(3,i,randi()%3)
 
 	for i in [[0,0,0,8],[0,0,9,0],[9,1,9,9],[0,9,8,9]]:
 		for grid in gm.get_grids_range(i[0],i[1],i[2],i[3]):
-			var b = G.building.instance()
-			add_child(b)
-			grid.building = b
-			b.grid = grid
+			G.spawn_manager.spawn_building_dirt_wall(grid.index_x,grid.index_y,randi()%3)
 			
-	for grid in gm.get_grids_range(5,4,6,4):
-			var b = G.building.instance()
-			add_child(b)
-			grid.building = b
-			b.grid = grid
+			
+	for i in range(5,7):
+		G.spawn_manager.spawn_building_dirt_wall(i,4,randi()%3)
 	
-	for grid in gm.get_grids_range(7,4,7,7):
-		var b = G.building.instance()
-		add_child(b)
-		grid.building = b
-		b.grid = grid
+	for i in range(4,8):
+		G.spawn_manager.spawn_building_dirt_wall(7,i,randi()%3)
 	
-	var g1:Gene = G.gene.instance()
-	var array = [g1]
-	G.spawn_manager.spawn_battle_entity_slime(8,8,array)	
+	var sm=G.spawn_manager
 	
-	var g2:Gene = G.gene_ignite.instance()
-	var array1 = [g2]
-	G.spawn_manager.spawn_battle_entity_slime(1,6,array1)	
-	
-	
-	
-	G.spawn_manager.spawn_projectile_little_slime_ball(1,1,Projectile.DIRECTION.RIGHT)
+	var m1 = G.spawn_manager.spawn_battle_entity(0,2,5,sm.WEAPON_ID.JAVELINE,[])
+	var m2 = G.spawn_manager.spawn_battle_entity(0,7,2,sm.WEAPON_ID.SWORD,[])
+	var m3 = G.spawn_manager.spawn_battle_entity(0,2,2,sm.WEAPON_ID.GREAD_SWORD,[])
+#
+	m1.attack_target = m2
+	m2.attack_target = m1
+	m3.attack_target = m2
 
 	
-	
-	
+	for i in range(10):
+		for j in range(10):
+			G.spawn_manager.spawn_ground_dirt(i,j,randi()%8)
 	
 	
 #	#目标点列表

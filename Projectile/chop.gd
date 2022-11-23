@@ -1,3 +1,5 @@
+# chop.gd
+
 extends Projectile
 
 func _ready():
