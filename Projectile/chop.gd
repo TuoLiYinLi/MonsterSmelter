@@ -4,7 +4,7 @@ extends Projectile
 
 func _ready():
 	# 持续时间
-#	life_time = 10
+	life_time = 1
 	# 初速度
 #	velocity = Vector2.ZERO
 	# 加速度
@@ -18,7 +18,10 @@ func on_hit_battle_entity(_battle_entity):
 	if(host and _battle_entity != host):
 		print('触发',_battle_entity)
 		host.offence(_battle_entity)
-		get_parent().remove_child(self)
+#		get_parent().remove_child(self)
+#		queue_free()
+		flag_valid = false
+		
 
 # 当击中建筑时触发
 func on_hit_building(_building):

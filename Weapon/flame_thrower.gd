@@ -7,7 +7,7 @@ func behavior():
 	if(get_target()):
 		# 在攻击范围内则进行攻击
 		var res:Array = G.grid_manager.check_in_cross(get_host().grid,get_target().grid)
-		if(res[0] and res[2] <= 2):
+		if(res[0] and res[2] <= 1):
 			if(get_host().attack_cd <= 0):
 		
 				print("[Weapon] 发动火焰喷射")
