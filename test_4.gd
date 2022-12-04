@@ -24,9 +24,9 @@ func _ready():
 	
 	var sm=G.spawn_manager
 	
-	var m1 = G.spawn_manager.spawn_battle_entity(0,2,5,sm.WEAPON_ID.JAVELINE,[])
-	var m2 = G.spawn_manager.spawn_battle_entity(0,7,2,sm.WEAPON_ID.SWORD,[])
-	var m3 = G.spawn_manager.spawn_battle_entity(0,2,2,sm.WEAPON_ID.GREAD_SWORD,[])
+	var m1 = G.spawn_manager.spawn_battle_entity(0,1,1,sm.WEAPON_ID.BOW,[])
+	var m2 = G.spawn_manager.spawn_battle_entity(0,8,8,sm.WEAPON_ID.BOW,[])
+	var m3 = G.spawn_manager.spawn_battle_entity(0,8,5,sm.WEAPON_ID.BOW,[])
 #
 	m1.attack_target = m2
 	m2.attack_target = m1

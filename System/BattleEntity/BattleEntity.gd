@@ -189,6 +189,8 @@ func set_rebound_proportion(f:float)->void:
 
 # 燃烧时间
 var burning_cd:float = 0
+#中毒时间
+var poisoning_cd:float = 0
 
 func _physics_process(delta:float):
 	
@@ -201,6 +203,12 @@ func _physics_process(delta:float):
 		health_current -= G.BURNING_RATE * self.health_max * delta
 		burning_cd -= delta
 		on_burning(delta)
+	
+	# 中毒效果
+	if(poisoning_cd > 0):
+		health_current -= G.POISON_RATE * self. health_current * delta
+		poisoning_cd -= delta
+		on_poisoning(delta)
 	
 	# 检测死亡&恢复生命值
 	if(health_current <= 0):
@@ -277,6 +285,8 @@ func offence(be:BattleEntity):
 	# 触发
 	on_attack(be)
 	be.on_attacked_by(self)
+	if be.health_current<=0 :		
+		on_enemy_dead()
 	
 #	print("%s的实际护甲率是%s"%[be.description,real_armor_rate])
 	
@@ -300,6 +310,10 @@ func on_burning(delta:float):
 	for g in $gene_pivot.get_children():
 		g.on_burning(delta)
 
+func on_poisoning(delta:float):
+	for g in $gene_pivot.get_children():
+		g.on_poisoning(delta)
+
 # 当死亡时，单帧触发
 func on_dead():
 	for g in $gene_pivot.get_children():
@@ -315,6 +329,10 @@ func on_attacked_by(enemy:BattleEntity):
 	for g in $gene_pivot.get_children():
 		g.on_attacked_by(enemy)
 
+#当击杀敌人时 enemy是击中的敌人 288触发
+func on_enemy_dead():
+	for g in $gene_pivot.get_children():
+		g.on_enemy_dead()
 
 # ---------------------------------------------------------------------------
 # 运动系统

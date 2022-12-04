@@ -5,6 +5,9 @@ extends Node2D
 # 全局燃烧系数
 const BURNING_RATE:float = 0.01
 
+#全局中毒系数
+const POISON_RATE:float = 0.01
+
 # 移动耗时系数
 const MOVING_SPEED:float = 5.0
 

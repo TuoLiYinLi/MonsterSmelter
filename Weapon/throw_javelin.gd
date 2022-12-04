@@ -11,7 +11,7 @@ func behavior():
 			if(get_host().attack_cd <= 0):
 		
 				print("[Weapon] 发动标枪投射")
-				G.spawn_manager.spawn_projectile_javeline(get_host().grid.index_x,get_host().grid.index_y,res[1],get_host())
+				G.spawn_manager.spawn_projectile_javelin(get_host().grid.index_x,get_host().grid.index_y,res[1],get_host())
 				get_host().attack_cd += 1
 			
 		# 在范围外则进行寻路靠近目标

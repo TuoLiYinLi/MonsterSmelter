@@ -1,4 +1,4 @@
-# script_name.gd
+# javelin.gd
 
 extends Projectile
 

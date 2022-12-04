@@ -52,7 +52,7 @@ enum WEAPON_ID{
 	SPIT, # 喷射（粘液球）
 	SWORD, # 剑（砍）
 	GREAD_SWORD, # 大剑（大横扫）
-	JAVELINE, # 标枪
+	JAVELIN, # 标枪
 	FLAME_THROWER, #火焰喷射
 	BOW, # 弓
 }
@@ -62,7 +62,7 @@ var weapon_dict:Dictionary = {
 	WEAPON_ID.SPIT: load("res://Weapon/spit.tscn"),
 	WEAPON_ID.SWORD: load("res://Weapon/sword.tscn"),
 	WEAPON_ID.GREAD_SWORD: load("res://Weapon/great_sword.tscn"),
-	WEAPON_ID.JAVELINE: load("res://Weapon/throw_javelin.tscn"),
+	WEAPON_ID.JAVELIN: load("res://Weapon/throw_javelin.tscn"),
 	WEAPON_ID.FLAME_THROWER: load("res://Weapon/flame_thrower.tscn"),
 	WEAPON_ID.BOW: load("res://Weapon/bow.tscn")
 }
@@ -74,9 +74,30 @@ func spawn_weapon(WP_ID:int)->Weapon:
 # ----------------------------------------------------------------------------
 # 基因
 enum GENE_ID{
+	ACCURATE, #精准
+	BLOODTHIRSTY, #流血
+	FOLIE, #疯狂
+	HARD, #坚硬
 	IGNITE, # 点燃
+	POISON, #毒液
+	STRENGTH, #力量
 }
 
+# 所有基因字典
+var gene_dict:Dictionary = {
+	GENE_ID.ACCURATE: load("res://Gene/accurate.tscn"),
+	GENE_ID.BLOODTHIRSTY: load("res://Gene/bloodthirsty.tscn"),
+	GENE_ID.FOLIE: load("res://Gene/folie.tscn"),
+	GENE_ID.HARD: load("res://Gene/hard.tscn"),
+	GENE_ID.IGNITE: load("res://Gene/ignite.tscn"),
+	GENE_ID.POISON: load("res://Gene/poison.tscn"),
+	GENE_ID.STRENGTH: load("res://Gene/strength.tscn")
+}
+
+
+#生成基因
+func spawn_gene(GE_ID:int)->Gene:
+	return GENE_ID[GE_ID].instance()
 
 
 # ----------------------------------------------------------------------------
@@ -109,8 +130,61 @@ func spawn_building(BD_ID:int,grid_x:int, grid_y:int , version:int = 0)->Buildin
 # 生成 建筑 墙
 func spawn_building_dirt_wall(grid_x:int, grid_y:int , version:int = 0):
 	spawn_building(BUILDING_ID.DIRT_WALL, grid_x, grid_y, version)
+	
+# ---------------------------------------------------------------------------------
+# 基因
 
+#生成精准基因
+var gene_accurate:PackedScene = load("res://Gene/accurate.tscn")
+func spawn_gene_accurate(be:BattleEntity):
+	var gene:Gene = gene_accurate.instance()
+	be.get_node("gene_pivot").add_child(gene)
+	print("【accurate】基因绑定成功")
 
+#生成流血基因
+var gene_bloodthirsty:PackedScene = load("res://Gene/bloodthirsty.tscn")
+func spawn_gene_bloodthirsty(be:BattleEntity):
+	var gene:Gene = gene_bloodthirsty.instance()
+	be.get_node("gene_pivot").add_child(gene)
+	print("【bloodthirsty】基因绑定成功")
+
+#生成疯狂基因
+var gene_folie:PackedScene = load("res://Gene/folie.tscn")
+func spawn_gene_folie(be:BattleEntity):
+	var gene:Gene = gene_folie.instance()
+	be.get_node("gene_pivot").add_child(gene)
+	print("【folie】基因绑定成功")
+
+#生成坚硬基因
+var gene_hard:PackedScene = load("res://Gene/hard.tscn")
+func spawn_gene_hard(be:BattleEntity):
+	var gene:Gene = gene_hard.instance()
+	be.get_node("gene_pivot").add_child(gene)
+	print("【hard】基因绑定成功")
+
+#生成点燃基因
+var gene_ignite:PackedScene = load("res://Gene/ignite.tscn")
+func spawn_gene_ignite(be:BattleEntity):
+	var gene:Gene = gene_ignite.instance()
+	be.get_node("gene_pivot").add_child(gene)
+	print("【ignite】基因绑定成功")
+	
+
+#生成毒液基因
+var gene_poison:PackedScene = load("res://Gene/poison.tscn")
+func spawn_gene_poison(be:BattleEntity):
+	var gene:Gene = gene_poison.instance()
+	be.get_node("gene_pivot").add_child(gene)
+	print("【poison】基因绑定成功")
+	
+#生成力量基因
+var gene_strength:PackedScene = load("res://Gene/strength.tscn")
+func spawn_gene_strength(be:BattleEntity):
+	var gene:Gene = gene_strength.instance()
+	be.get_node("gene_pivot").add_child(gene)
+	print("【strength】基因绑定成功")
+	
+	
 # ---------------------------------------------------------------------------------
 # 投射物
 
@@ -204,9 +278,9 @@ func spawn_projectile_gread_chop_attack(grid_x:int,grid_y:int, direction:int, ho
 			
 			
 # 生成 投射物 标枪
-var projectile_javeline:PackedScene = load("res://Projectile/javeline.tscn")
-func spawn_projectile_javeline(grid_x:int,grid_y:int, direction:int, host:BattleEntity = null):
-	var bullet:Projectile = projectile_javeline.instance()
+var projectile_javelin:PackedScene = load("res://Projectile/javelin.tscn")
+func spawn_projectile_javelin(grid_x:int,grid_y:int, direction:int, host:BattleEntity = null):
+	var bullet:Projectile = projectile_javelin.instance()
 	G.projectile_pivot.add_child(bullet)
 	bullet.position = G.grid_manager.get_grid_at(grid_x,grid_y).position
 	bullet.host = host

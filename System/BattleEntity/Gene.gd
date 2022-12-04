@@ -5,16 +5,16 @@ extends Node2D
 class_name Gene
 
 # 最大生命值
-var health_max:float = 10
+var health_max:float = 0
 
 #暴击率
-var crit_rate:float = 0.1
+var crit_rate:float = 0
 
 #暴击倍数
 var crit_multiple:float = 0
 
 # 生命恢复
-var health_recovery:float = 0.1
+var health_recovery:float = 0
 
 # 攻击力
 var attack:float = 0
@@ -69,6 +69,9 @@ func on_attack(_enemy):
 func on_attacked_by(_enemy):
 	pass
 
+#当击杀敌人时 enemy是击中的敌人
+func on_enemy_dead():
+	pass
 
 # --------------------------------------------------------------------
 # 角色移动系统

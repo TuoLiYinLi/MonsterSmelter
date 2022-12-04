@@ -164,8 +164,10 @@ func next_step_multi_A(navigation_matrix,start_x,start_y, target_position_list:A
 	#将初始坐标赋值为1防止进入函数卡死
 	navigation_matrix[start_x][start_y]=1
 	start_position=[start_x,start_y]
+	
 	map2 = navigation_matrix.duplicate(true)	
 	A(navigation_matrix,start_x,start_y)
+	
 	for i in range(len(navigation_matrix[0])):
 		print(navigation_matrix[i])
 	
@@ -174,7 +176,6 @@ func next_step_multi_A(navigation_matrix,start_x,start_y, target_position_list:A
 		var sum = 0
 		
 		var route = get_A_route(map3,start_x,start_y,target_position_list[i][0],target_position_list[i][1])
-		print(route)
 		#计算权值大小判断最短
 		for j in len(route):
 			sum = sum + map3[route[j][0]][route[j][1]]
@@ -183,8 +184,7 @@ func next_step_multi_A(navigation_matrix,start_x,start_y, target_position_list:A
 			path = route
 	if(!path):
 		return []
-	print("path",path)
-	return [path[len(path)-1][0],path[len(path)-1][1]]
+	return [path[0][0],path[0][1]]
 
 		
 		

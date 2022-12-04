@@ -124,3 +124,20 @@ func check_in_cross(grid_center:Grid, grid_target:Grid)->Array:
 		else:
 			direction = G.DIRECTION.RIGHT
 	return [in_cross, direction, d]
+
+
+#输出十字形数组，根据输入的distance输出一个长度为distance的十字行
+func check_in_rhombus(grid_center:Grid, distance:int)->Array:
+	var out = []
+	for i in range(-distance,distance+1):
+		var spot = [grid_center.index_x+i, grid_center.index_y]
+		if(spot[0]<0 or spot[0]>=width  or i == 0):
+			continue
+		out.append(spot)
+		spot = [grid_center.index_x, grid_center.index_y+i]
+		if(spot[1]<0 or spot[1]>=height  or i == 0):
+			continue
+		out.append(spot)
+	print("[中心点]",grid_center.index_x,",",grid_center.index_y)
+	print("[spot]",out)
+	return out
