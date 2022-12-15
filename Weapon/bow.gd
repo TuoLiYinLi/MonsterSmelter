@@ -19,8 +19,8 @@ func behavior():
 			#使用权值地图计算 Z
 			if(get_host().moving_cd <= 0):
 				var mt = G.grid_manager.to_navigate_matrix(G,"simple_navigate_weight_matrix")
-				var spot = G.grid_manager.check_in_rhombus(get_target().grid,3)
-				var ns = G.path_finder.next_step_multi_A(mt,get_host().grid.index_x, get_host().grid.index_y, spot)
+							
+				var ns = G.path_finder.next_step_A(mt,get_host().grid.index_x, get_host().grid.index_y,get_target().grid.index_x, get_target().grid.index_y)
 				
 				if(ns):
 					get_host().move_to(G.grid_manager.get_grid_at(ns[0], ns[1]))

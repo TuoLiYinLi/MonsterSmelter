@@ -56,6 +56,7 @@ func get_ground_at(index_x:int, index_y:int):
 		return g.ground
 	return null
 
+
 # 类似get_grid_at获取特定位置上的建筑
 func get_building_at(index_x:int, index_y:int):
 	var g = get_grid_at(index_x, index_y)
@@ -74,6 +75,15 @@ func get_grids_range(x1:int, y1:int, x2:int, y2:int)->Array:
 			else:
 				continue
 	return out
+
+#查看特定格子中是否有建筑
+func find_building(index_x:int, index_y:int):
+	var g = get_grid_at(index_x, index_y)
+	if(g.building!=null):
+		return true
+	else:
+		return false
+
 
 # 导出寻路矩阵，配置一个实例上的方法作为处理网格的函数
 func to_navigate_matrix(instance:Object, method_name:String)->Array:
@@ -126,18 +136,70 @@ func check_in_cross(grid_center:Grid, grid_target:Grid)->Array:
 	return [in_cross, direction, d]
 
 
-#输出十字形数组，根据输入的distance输出一个长度为distance的十字行
-func check_in_rhombus(grid_center:Grid, distance:int)->Array:
-	var out = []
-	for i in range(-distance,distance+1):
+# 检测grid_target是否在grid_center的直线方向上、它在哪个方向以及距离
+func check_in_crosss(grid_center:Grid, grid_target:BattleEntity,distance:int)->Array:
+	
+	for i in range(1,distance+1):
 		var spot = [grid_center.index_x+i, grid_center.index_y]
-		if(spot[0]<0 or spot[0]>=width  or i == 0):
-			continue
-		out.append(spot)
-		spot = [grid_center.index_x, grid_center.index_y+i]
-		if(spot[1]<0 or spot[1]>=height  or i == 0):
-			continue
-		out.append(spot)
-	print("[中心点]",grid_center.index_x,",",grid_center.index_y)
-	print("[spot]",out)
+		if(spot[0]>=width  or find_building(spot[0],spot[1])):
+			break
+		elif(get_battle_entity_at(spot[0],spot[1]) == grid_target):
+			return [true, G.DIRECTION.RIGHT, i]
+			
+	for i in range(-1,(distance*-1)-1,-1):
+		var spot = [grid_center.index_x+i, grid_center.index_y]
+		if(spot[0]<0 or find_building(spot[0],spot[1])):
+			break
+		elif(get_battle_entity_at(spot[0],spot[1]) == grid_target):
+			return [true, G.DIRECTION.LEFT, i*-1]
+			
+	for i in range(1,distance+1):
+		var spot = [grid_center.index_x, grid_center.index_y+i]
+		if(spot[1]>=height or find_building(spot[0],spot[1])):
+			break
+		elif(get_battle_entity_at(spot[0],spot[1]) == grid_target):
+			return [true, G.DIRECTION.DOWN, i]
+			
+	for i in range(-1,(distance*-1)-1,-1):
+		var spot = [grid_center.index_x, grid_center.index_y+i]
+		if(spot[1]>=height or find_building(spot[0],spot[1])):
+			break
+			
+		elif(get_battle_entity_at(spot[0],spot[1]) == grid_target):
+			
+			return [true, G.DIRECTION.UP, i*-1]
+	return [false, 0, 0]
+
+
+#输出目标周边可行点
+func check_in_spot(grid_center:Grid, distance:int)->Array:
+	var out = []
+	for i in range(1,distance):
+		var spot = [grid_center.index_x+i, grid_center.index_y]
+		if(spot[0]>=width  or find_building(spot[0],spot[1])):
+			break
+		else:
+			out.append(spot)
+	for i in range(-1,(distance*-1),-1):
+		var spot = [grid_center.index_x+i, grid_center.index_y]
+		if(spot[0]<0 or find_building(spot[0],spot[1])):
+			break
+		else:
+			out.append(spot)
+	for i in range(1,distance):
+		var spot = [grid_center.index_x, grid_center.index_y+i]
+		if(spot[1]>=height or find_building(spot[0],spot[1])):
+			break
+		else:
+			out.append(spot)
+	for i in range(-1,(distance*-1),-1):
+		var spot = [grid_center.index_x, grid_center.index_y+i]
+		if(spot[1]>=height or find_building(spot[0],spot[1])):
+			break
+		else:
+			out.append(spot)
 	return out
+
+func check_in_rhombus(grid_center:Grid, distance:int):
+	var center = [grid_center.index_x,grid_center.index_y]
+	pass

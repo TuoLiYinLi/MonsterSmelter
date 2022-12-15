@@ -23,10 +23,10 @@ func _ready():
 			G.spawn_manager.spawn_ground_dirt(i,j,randi()%8)	
 	var sm=G.spawn_manager
 	var m1 = G.spawn_manager.spawn_battle_entity(0,2,5,sm.WEAPON_ID.JAVELIN,[])
-	G.spawn_manager.spawn_gene_ignite(m1)
+	G.spawn_manager.spawn_Gene(m1,sm.GENE_ID.POISON)
 	
 	var m2 = G.spawn_manager.spawn_battle_entity(0,8,8,sm.WEAPON_ID.JAVELIN,[])
-	G.spawn_manager.spawn_gene_poison(m2)
+	G.spawn_manager.spawn_Gene(m2,sm.GENE_ID.IGNITE)
 
 	m1.attack_target = m2
 	m2.attack_target = m1
